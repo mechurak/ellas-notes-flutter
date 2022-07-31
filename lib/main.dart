@@ -5,6 +5,8 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/home_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,20 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Startup Name Generator'),
+        title: 'Ella\'s Notes',
+        theme: ThemeData(
+          scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
         ),
-        body: const Center(
-          child: RandomWords(),
-        ),
-      ),
+        home: HomePage()
     );
   }
 }
-
-
 
 class RandomWords extends StatefulWidget {
   const RandomWords({super.key});
@@ -46,7 +42,8 @@ class _RandomWordsState extends State<RandomWords> {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: /*1*/ (context, i) {
-        if (i.isOdd) return const Divider(); /*2*/
+        if (i.isOdd) return const Divider();
+        /*2*/
 
         final index = i ~/ 2; /*3*/
         if (index >= _suggestions.length) {
