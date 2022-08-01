@@ -6,6 +6,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'pages/animdo_page.dart';
 import 'pages/home_page.dart';
 import 'pages/subject_page.dart';
 
@@ -22,10 +23,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ella\'s Notes',
       theme: ThemeData(
-        // scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
       ),
-      home: SubjectPage(),
+      home: AnimdoPage(),
     );
   }
 }
