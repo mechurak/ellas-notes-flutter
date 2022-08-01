@@ -12,12 +12,15 @@ class SubjectPage extends StatefulWidget {
 class _SubjectPageState extends State<SubjectPage> {
   late double _deviceHeight, _deviceWidth;
 
+  String? _newTaskContent;
+
   _SubjectPageState();
 
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
+    print("Input Value: $_newTaskContent");
 
     return Scaffold(
       appBar: AppBar(
@@ -56,8 +59,27 @@ class _SubjectPageState extends State<SubjectPage> {
 
   Widget _addTaskButton() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: _displayTaskPopup,
       child: const Icon(Icons.add),
+    );
+  }
+
+  void _displayTaskPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext _context) {
+        return AlertDialog(
+          title: const Text("Add New Task!"),
+          content: TextField(
+            onSubmitted: (_value) {},
+            onChanged: (_value) {
+              setState(() {
+                _newTaskContent = _value;
+              });
+            },
+          ),
+        );
+      },
     );
   }
 }
