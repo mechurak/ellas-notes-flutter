@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../models/task.dart';
+
 class SubjectPage extends StatefulWidget {
   const SubjectPage({Key? key}) : super(key: key);
 
@@ -14,6 +16,7 @@ class _SubjectPageState extends State<SubjectPage> {
   late double _deviceHeight, _deviceWidth;
 
   String? _newTaskContent;
+  Box? _box;
 
   _SubjectPageState();
 
@@ -48,6 +51,7 @@ class _SubjectPageState extends State<SubjectPage> {
       future: Hive.openBox('tasks'),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
         if (_snapshot.connectionState == ConnectionState.done) {
+          _box = _snapshot.data;
           return _taskList();
         } else {
           return const Center(
@@ -59,22 +63,33 @@ class _SubjectPageState extends State<SubjectPage> {
   }
 
   Widget _taskList() {
-    return ListView(
-      children: [
-        ListTile(
-          title: const Text(
-            "Do Laundry!",
-            style: TextStyle(decoration: TextDecoration.lineThrough),
+    List tasks = _box!.values.toList();
+
+    return ListView.builder(
+      itemCount: tasks.length,
+      itemBuilder: (BuildContext _context, int _index) {
+        Task task = Task.fromMap(tasks[_index]);
+        return ListTile(
+          title: Text(
+            task.content,
+            style: TextStyle(
+                decoration: task.done ? TextDecoration.lineThrough : null),
           ),
           subtitle: Text(
-            DateTime.now().toString(),
+            task.timestamp.toString(),
           ),
-          trailing: const Icon(
-            Icons.check_box_outlined,
+          trailing: Icon(
+            task.done
+                ? Icons.check_box_outlined
+                : Icons.check_box_outline_blank,
             color: Colors.red,
           ),
-        ),
-      ],
+        );
+      },
+    );
+
+    return ListView(
+      children: [],
     );
   }
 
@@ -92,7 +107,19 @@ class _SubjectPageState extends State<SubjectPage> {
         return AlertDialog(
           title: const Text("Add New Task!"),
           content: TextField(
-            onSubmitted: (_value) {},
+            onSubmitted: (_value) {
+              if (_newTaskContent != null) {
+                Task task = Task(
+                    content: _newTaskContent!,
+                    timestamp: DateTime.now(),
+                    done: false);
+                _box!.add(task.toMap());
+                setState(() {
+                  _newTaskContent = null;
+                  Navigator.pop(context);
+                });
+              }
+            },
             onChanged: (_value) {
               setState(() {
                 _newTaskContent = _value;
