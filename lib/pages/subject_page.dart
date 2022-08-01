@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({Key? key}) : super(key: key);
@@ -17,10 +18,15 @@ class _SubjectPageState extends State<SubjectPage> {
   _SubjectPageState();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
-    print("Input Value: $_newTaskContent");
 
     return Scaffold(
       appBar: AppBar(
@@ -32,8 +38,23 @@ class _SubjectPageState extends State<SubjectPage> {
           ),
         ),
       ),
-      body: _taskList(),
+      body: _tasksView(),
       floatingActionButton: _addTaskButton(),
+    );
+  }
+
+  Widget _tasksView() {
+    return FutureBuilder(
+      future: Hive.openBox('tasks'),
+      builder: (BuildContext _context, AsyncSnapshot _snapshot) {
+        if (_snapshot.connectionState == ConnectionState.done) {
+          return _taskList();
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 
