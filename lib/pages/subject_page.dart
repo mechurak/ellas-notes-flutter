@@ -50,7 +50,7 @@ class _SubjectPageState extends State<SubjectPage> {
     return FutureBuilder(
       future: Hive.openBox('tasks'),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
-        if (_snapshot.connectionState == ConnectionState.done) {
+        if (_snapshot.hasData) {
           _box = _snapshot.data;
           return _taskList();
         } else {
@@ -84,6 +84,15 @@ class _SubjectPageState extends State<SubjectPage> {
                 : Icons.check_box_outline_blank,
             color: Colors.red,
           ),
+          onTap: () {
+            task.done = !task.done;
+            _box!.putAt(_index, task.toMap());
+            setState(() {});
+          },
+          onLongPress: () {
+            _box!.deleteAt(_index);
+            setState(() {});
+          },
         );
       },
     );
