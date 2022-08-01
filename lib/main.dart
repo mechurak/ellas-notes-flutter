@@ -6,6 +6,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
+import 'pages/subject_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,11 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Ella\'s Notes',
-        theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
-        ),
-        home: HomePage()
+      title: 'Ella\'s Notes',
+      theme: ThemeData(
+        // scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
+        primarySwatch: Colors.red,
+      ),
+      home: SubjectPage(),
     );
   }
 }
