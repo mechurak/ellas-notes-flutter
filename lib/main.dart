@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:ellas_notes_flutter/models/app_config.dart';
+import 'package:ellas_notes_flutter/services/http_service.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ import 'pages/subject_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadConfig();
+  registerHttpService();
   await Hive.initFlutter("hive_boxes");
   runApp(const MyApp());
 }
@@ -29,6 +31,12 @@ Future<void> loadConfig() async {
   print(configData);
   GetIt.instance.registerSingleton<AppConfig>(
     AppConfig(COIN_API_BASE_URL: configData["COIN_API_BASE_URL"]),
+  );
+}
+
+void registerHttpService() {
+  GetIt.instance.registerSingleton<HttpService>(
+    HttpService(),
   );
 }
 
