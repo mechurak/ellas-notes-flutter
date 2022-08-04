@@ -2,17 +2,34 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:convert';
+
+import 'package:ellas_notes_flutter/models/app_config.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'pages/animdo_page.dart';
+import 'pages/coin_cap_page.dart';
 import 'pages/home_page.dart';
 import 'pages/subject_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await loadConfig();
   await Hive.initFlutter("hive_boxes");
   runApp(const MyApp());
+}
+
+Future<void> loadConfig() async {
+  String configContent = await rootBundle.loadString("assets/config/main.json");
+  Map configData = jsonDecode(configContent);
+  print(configData);
+  GetIt.instance.registerSingleton<AppConfig>(
+    AppConfig(COIN_API_BASE_URL: configData["COIN_API_BASE_URL"]),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,8 +41,9 @@ class MyApp extends StatelessWidget {
       title: 'Ella\'s Notes',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color.fromRGBO(88, 60, 197, 1.0),
       ),
-      home: AnimdoPage(),
+      home: CoinCapPage(),
     );
   }
 }
