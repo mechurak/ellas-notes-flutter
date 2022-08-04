@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../services/http_service.dart';
+import 'coin_detail_page.dart';
 
 class CoinCapPage extends StatefulWidget {
   const CoinCapPage({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class CoinCapPage extends StatefulWidget {
 
 class _CoinCapPageState extends State<CoinCapPage> {
   double? _deviceHeight, _deviceWidth;
+  String? _selectedCoin = "bitcoin";
   HttpService? _http;
 
   @override
@@ -45,7 +47,13 @@ class _CoinCapPageState extends State<CoinCapPage> {
   }
 
   Widget _selectedCoinDropDown() {
-    List<String> coins = ["bitcoin"];
+    List<String> coins = [
+      "bitcoin",
+      "ethereum",
+      "tether",
+      "cardano",
+      "ripple",
+    ];
     List<DropdownMenuItem<String>> items = coins
         .map(
           (e) => DropdownMenuItem(
@@ -62,9 +70,13 @@ class _CoinCapPageState extends State<CoinCapPage> {
         )
         .toList();
     return DropdownButton(
-      value: coins.first,
+      value: _selectedCoin,
       items: items,
-      onChanged: (value) {},
+      onChanged: (dynamic value) {
+        setState(() {
+          _selectedCoin = value;
+        });
+      },
       dropdownColor: const Color.fromRGBO(83, 88, 206, 1.0),
       iconSize: 30,
       icon: const Icon(Icons.arrow_drop_down_sharp, color: Colors.white),
@@ -74,7 +86,7 @@ class _CoinCapPageState extends State<CoinCapPage> {
 
   Widget _dataWidgets() {
     return FutureBuilder(
-      future: _http!.get("/coins/bitcoin"),
+      future: _http!.get("/coins/$_selectedCoin"),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           Map data = jsonDecode(
@@ -82,12 +94,26 @@ class _CoinCapPageState extends State<CoinCapPage> {
           );
           num usdPrice = data["market_data"]["current_price"]["usd"];
           num change24h = data["market_data"]["price_change_percentage_24h"];
+          Map exchageRates = data["market_data"]["current_price"];
+          print(exchageRates);
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _coinImageWidget(data["image"]["large"]),
+              GestureDetector(
+                onDoubleTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext) {
+                        return CoinDetailPage(rates: exchageRates);
+                      },
+                    ),
+                  );
+                },
+                child: _coinImageWidget(data["image"]["large"]),
+              ),
               _currentPriceWidget(usdPrice),
               _percentageChangeWidget(change24h),
               _descriptionCardWidget(data["description"]["en"]),
