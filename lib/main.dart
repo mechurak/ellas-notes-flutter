@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:ellas_notes_flutter/models/app_config.dart';
+import 'package:ellas_notes_flutter/pages/frivia_page.dart';
 import 'package:ellas_notes_flutter/services/http_service.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
@@ -48,10 +49,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ella\'s Notes',
       theme: ThemeData(
+        fontFamily: 'ArchitectsDaughter',
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color.fromRGBO(88, 60, 197, 1.0),
+        scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
       ),
-      home: CoinCapPage(),
+      home: FriviaPage(),
     );
   }
 }
