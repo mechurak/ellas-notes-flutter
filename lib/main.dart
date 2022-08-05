@@ -5,7 +5,6 @@
 import 'dart:convert';
 
 import 'package:ellas_notes_flutter/models/app_config.dart';
-import 'package:ellas_notes_flutter/pages/frivia_page.dart';
 import 'package:ellas_notes_flutter/services/http_service.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'pages/animdo_page.dart';
 import 'pages/coin_cap_page.dart';
+import 'pages/frivia_home_page.dart';
 import 'pages/home_page.dart';
 import 'pages/subject_page.dart';
 
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
       ),
-      home: FriviaPage(),
+      home: FriviaHomePage(),
     );
   }
 }

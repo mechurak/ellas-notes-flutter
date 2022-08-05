@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FriviaPage extends StatelessWidget {
+  final String difficultyLevel;
+
   double? _deviceHeight, _deviceWidth;
 
-  FriviaPage({Key? key}) : super(key: key);
+  FriviaPage({required this.difficultyLevel});
 
   GamePageProvider? _pageProvider;
 
@@ -15,7 +17,8 @@ class FriviaPage extends StatelessWidget {
     _deviceWidth = MediaQuery.of(context).size.width;
 
     return ChangeNotifierProvider(
-      create: (context) => GamePageProvider(context: context),
+      create: (context) =>
+          GamePageProvider(context: context, difficultyLevel: difficultyLevel),
       child: _buildUi(),
     );
 
@@ -73,7 +76,9 @@ class FriviaPage extends StatelessWidget {
 
   Widget _trueButton() {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        _pageProvider?.answerQuestion("True");
+      },
       color: Colors.green,
       minWidth: _deviceWidth! * 0.80,
       height: _deviceHeight! * 0.10,
@@ -84,7 +89,9 @@ class FriviaPage extends StatelessWidget {
 
   Widget _falseButton() {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        _pageProvider?.answerQuestion("False");
+      },
       color: Colors.red,
       minWidth: _deviceWidth! * 0.80,
       height: _deviceHeight! * 0.10,
