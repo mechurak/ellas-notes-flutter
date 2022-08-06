@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:ellas_notes_flutter/services/firebase_service.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'feed_page.dart';
 import 'profile_page.dart';
@@ -11,11 +16,19 @@ class FinstargramHomePage extends StatefulWidget {
 }
 
 class _FinstargramHomePageState extends State<FinstargramHomePage> {
+  FirebaseService? _firebaseService;
+
   int _currentPage = 0;
   final List<Widget> _pages = [
     FeedPage(),
     ProfilePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseService = GetIt.instance.get<FirebaseService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +37,7 @@ class _FinstargramHomePageState extends State<FinstargramHomePage> {
         title: const Text("Finstargram"),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: _postImage,
             child: const Icon(Icons.add_a_photo),
           ),
           Padding(
@@ -55,5 +68,12 @@ class _FinstargramHomePageState extends State<FinstargramHomePage> {
         BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.account_box))
       ],
     );
+  }
+
+  void _postImage() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+    File image = File(result!.files.first.path!);
+    await _firebaseService!.postImage(image);
   }
 }
