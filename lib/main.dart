@@ -5,8 +5,10 @@
 import 'dart:convert';
 
 import 'package:ellas_notes_flutter/models/app_config.dart';
+import 'package:ellas_notes_flutter/services/firebase_service.dart';
 import 'package:ellas_notes_flutter/services/http_service.dart';
 import 'package:english_words/english_words.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -23,6 +25,10 @@ import 'pages/subject_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  GetIt.instance.registerSingleton<FirebaseService>(
+    FirebaseService(),
+  );
   await loadConfig();
   registerHttpService();
   await Hive.initFlutter("hive_boxes");
@@ -56,7 +62,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         // scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
       ),
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
         "register": (context) => RegisterPage(),
         "login": (context) => LoginPage(),
