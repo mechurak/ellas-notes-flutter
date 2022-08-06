@@ -14,8 +14,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'pages/animdo_page.dart';
 import 'pages/coin_cap_page.dart';
+import 'pages/finstargram_home_page.dart';
 import 'pages/frivia_home_page.dart';
 import 'pages/home_page.dart';
+import 'pages/login_page.dart';
+import 'pages/register_page.dart';
 import 'pages/subject_page.dart';
 
 void main() async {
@@ -49,11 +52,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ella\'s Notes',
       theme: ThemeData(
-        fontFamily: 'ArchitectsDaughter',
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
+        // fontFamily: 'ArchitectsDaughter',
+        primarySwatch: Colors.red,
+        // scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
       ),
-      home: FriviaHomePage(),
+      initialRoute: 'home',
+      routes: {
+        "register": (context) => RegisterPage(),
+        "login": (context) => LoginPage(),
+        "home": (context) => FinstargramHomePage(),
+      },
     );
   }
 }
