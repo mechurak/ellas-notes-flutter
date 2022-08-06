@@ -90,4 +90,23 @@ class FirebaseService {
       return false;
     }
   }
+
+  Stream<QuerySnapshot> getPostsForUser() {
+    String uid = _auth.currentUser!.uid;
+    return _db
+        .collection(POSTS_COLLECTION)
+        .where('userId', isEqualTo: uid)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getLatestPosts() {
+    return _db
+        .collection(POSTS_COLLECTION)
+        .orderBy("timestamp", descending: true)
+        .snapshots();
+  }
+
+  Future<void> logout() async {
+    await _auth.signOut();
+  }
 }

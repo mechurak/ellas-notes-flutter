@@ -43,7 +43,10 @@ class _FinstargramHomePageState extends State<FinstargramHomePage> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                await _firebaseService!.logout();
+                Navigator.popAndPushNamed(context, 'login');
+              },
               child: const Icon(Icons.logout),
             ),
           ),
