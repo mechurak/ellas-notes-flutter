@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../models/task.dart';
+import '../../models/task.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({Key? key}) : super(key: key);

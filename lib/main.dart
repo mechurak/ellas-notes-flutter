@@ -4,31 +4,26 @@
 
 import 'dart:convert';
 
-import 'package:ellas_notes_flutter/models/app_config.dart';
-import 'package:ellas_notes_flutter/services/firebase_service.dart';
-import 'package:ellas_notes_flutter/services/http_service.dart';
-import 'package:english_words/english_words.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'pages/animdo_page.dart';
-import 'pages/coin_cap_page.dart';
-import 'pages/finstargram_home_page.dart';
-import 'pages/frivia_home_page.dart';
+import 'models/app_config.dart';
+import 'pages/game_page.dart';
 import 'pages/home_page.dart';
-import 'pages/login_page.dart';
-import 'pages/register_page.dart';
-import 'pages/subject_page.dart';
+import 'pages/lecture_page.dart';
+import 'services/firebase_service.dart';
+import 'services/http_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  GetIt.instance.registerSingleton<FirebaseService>(
-    FirebaseService(),
-  );
+  // TODO: Introduce Firebase
+  // await Firebase.initializeApp();
+  // GetIt.instance.registerSingleton<FirebaseService>(
+  //   FirebaseService(),
+  // );
   await loadConfig();
   registerHttpService();
   await Hive.initFlutter("hive_boxes");
@@ -56,51 +51,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ella\'s Notes',
+      title: "Ella's Notes",
       theme: ThemeData(
-        // fontFamily: 'ArchitectsDaughter',
-        primarySwatch: Colors.red,
-        // scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
+        primarySwatch: Colors.green,
       ),
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
-        "register": (context) => RegisterPage(),
-        "login": (context) => LoginPage(),
-        "home": (context) => FinstargramHomePage(),
-      },
-    );
-  }
-}
-
-class RandomWords extends StatefulWidget {
-  const RandomWords({super.key});
-
-  @override
-  State<RandomWords> createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: /*1*/ (context, i) {
-        if (i.isOdd) return const Divider();
-        /*2*/
-
-        final index = i ~/ 2; /*3*/
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-        }
-        return ListTile(
-          title: Text(
-            _suggestions[index].asPascalCase,
-            style: _biggerFont,
-          ),
-        );
+        "home": (context) => HomePage(),
+        "lecture": (context) => LecturePage(),
+        "game": (context) => GamePage(),
       },
     );
   }

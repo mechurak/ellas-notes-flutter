@@ -1,4 +1,4 @@
-import 'package:ellas_notes_flutter/pages/frivia_page.dart';
+import 'frivia_page.dart';
 import 'package:flutter/material.dart';
 
 class FriviaHomePage extends StatefulWidget {

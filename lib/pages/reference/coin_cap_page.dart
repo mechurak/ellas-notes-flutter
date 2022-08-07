@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../services/http_service.dart';
+import '../../services/http_service.dart';
 import 'coin_detail_page.dart';
 
 class CoinCapPage extends StatefulWidget {
