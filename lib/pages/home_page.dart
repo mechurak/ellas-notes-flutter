@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../models/subject.dart';
+import '../repositories/subject_repository.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _lectureList(),
+                _subjectList(),
               ],
             ),
           ),
@@ -37,42 +40,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _lectureList() {
-    List lectures = ['lecture 1', 'lecture 2'];
-
+  Widget _subjectList() {
+    List subjects = SubjectRepository().getSubjects();
     return Expanded(
-      child: ListView(
-        children: [
-          ListTile(
-            title: Text('Lecture 1'),
-            subtitle: Text("temp description"),
-            onTap: () {
-              setState(() {
-                Navigator.pushNamed(context, 'lecture');
-              });
-            },
-            onLongPress: () {
-              setState(() {
-                Navigator.pushNamed(context, 'game');
-              });
-            },
-          ),
-          ListTile(
-            title: Text('Lecture 2'),
-            subtitle: Text("temp description"),
-            onTap: () {
-              setState(() {
-                Navigator.pushNamed(context, 'lecture');
-              });
-            },
-            onLongPress: () {
-              setState(() {
-                Navigator.pushNamed(context, 'game');
-              });
-            },
-          ),
-        ],
+      child: ListView.builder(
+        itemCount: subjects.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _subjectTile(subjects[index]);
+        },
       ),
+    );
+  }
+
+  Widget _subjectTile(Subject subject) {
+    return ListTile(
+      visualDensity: const VisualDensity(vertical: 4),
+      title: Text(subject.title),
+      leading: Container(
+        // height: 100,
+        width: 75,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(subject.imageUrl),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(50),
+          ),
+        ),
+      ),
+      subtitle: Text(subject.description),
     );
   }
 }
