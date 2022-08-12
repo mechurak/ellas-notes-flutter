@@ -1,3 +1,4 @@
+import 'package:ellas_notes_flutter/pages/chapter_page.dart';
 import 'package:flutter/material.dart';
 
 import '../models/subject.dart';
@@ -21,6 +22,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ella's Notes"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                print("login button");
+              },
+              child: const Icon(Icons.login),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Container(
@@ -37,16 +49,23 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
   Widget _subjectList() {
     List subjects = SubjectRepository().getSubjects();
     return Expanded(
-      child: ListView.builder(
+      child: ListView.separated(
         itemCount: subjects.length,
         itemBuilder: (BuildContext context, int index) {
           return _subjectTile(subjects[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
         },
       ),
     );
@@ -54,6 +73,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget _subjectTile(Subject subject) {
     return ListTile(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return ChapterPage(subject: subject.title);
+            },
+          ),
+        );
+      },
       visualDensity: const VisualDensity(vertical: 4),
       title: Text(subject.title),
       leading: Container(
