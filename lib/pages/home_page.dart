@@ -1,8 +1,8 @@
-import 'package:ellas_notes_flutter/pages/chapter_page.dart';
 import 'package:flutter/material.dart';
 
 import '../models/subject.dart';
 import '../repositories/subject_repository.dart';
+import 'chapter_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

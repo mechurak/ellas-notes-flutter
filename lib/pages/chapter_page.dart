@@ -1,13 +1,20 @@
-import 'package:ellas_notes_flutter/repositories/chapter_repository.dart';
 import 'package:flutter/material.dart';
 
 import '../models/chapter.dart';
+import '../repositories/chapter_repository.dart';
+import 'lecture_page.dart';
 
-class ChapterPage extends StatelessWidget {
+class ChapterPage extends StatefulWidget {
   final String subject;
-  late double _deviceHeight, _deviceWidth;
 
-  ChapterPage({required this.subject});
+  const ChapterPage({Key? key, required this.subject}) : super(key: key);
+
+  @override
+  State<ChapterPage> createState() => _ChapterPageState();
+}
+
+class _ChapterPageState extends State<ChapterPage> {
+  late double _deviceHeight, _deviceWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,7 @@ class ChapterPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(subject),
+        title: Text(widget.subject),
       ),
       body: SafeArea(
         child: Container(
@@ -52,7 +59,19 @@ class ChapterPage extends StatelessWidget {
 
   Widget _chapterTile(Chapter chapter) {
     return ListTile(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return LecturePage(
+                subjectId: chapter.subjectId,
+                chapterNameForId: chapter.nameForId,
+              );
+            },
+          ),
+        );
+      },
       title: Text(chapter.title),
       subtitle: Text(chapter.lastStudyDate.toString()),
     );

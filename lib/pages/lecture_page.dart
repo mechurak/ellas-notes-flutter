@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../models/word.dart';
+import '../repositories/lecture_repository.dart';
+
 class LecturePage extends StatefulWidget {
-  const LecturePage({Key? key}) : super(key: key);
+  final int subjectId;
+  final String chapterNameForId;
+
+  const LecturePage(
+      {Key? key, required this.subjectId, required this.chapterNameForId})
+      : super(key: key);
 
   @override
   State<LecturePage> createState() => _LecturePageState();
@@ -17,7 +25,7 @@ class _LecturePageState extends State<LecturePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lecture Name"),
+        title: Text(widget.chapterNameForId),
       ),
       body: SafeArea(
         child: Container(
@@ -28,12 +36,35 @@ class _LecturePageState extends State<LecturePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Lecture Page"),
+                _wordList(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _wordList() {
+    List words = LectureRepository().getWords();
+    return Expanded(
+      child: ListView.separated(
+        itemCount: words.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _wordTile(words[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider();
+        },
+      ),
+    );
+  }
+
+  Widget _wordTile(Word word) {
+    return ListTile(
+      onTap: () {},
+      title: Text(word.text),
+      subtitle: word.note != null ? Text(word.note!) : null,
     );
   }
 }
