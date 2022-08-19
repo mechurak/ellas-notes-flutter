@@ -1,6 +1,10 @@
+import 'package:hive/hive.dart';
+
 import '../models/subject.dart';
 
 class SubjectRepository {
+  static const String subjectBox = 'subject';
+
   final List<Subject> _initialSubjects = [
     Subject(
       title : "정면돌파 스피킹 template",
@@ -27,6 +31,18 @@ class SubjectRepository {
         imageUrl : "https://image.kyobobook.co.kr/images/book/xlarge/697/x3904000048697.jpg"
     ),
   ];
+
+  Future<void> initBox() async {
+    if (await Hive.boxExists(subjectBox)) {
+      // do nothing
+    } else {
+      await Hive.openBox(subjectBox);
+      final Box box = Hive.box(subjectBox);
+      for (Subject subject in _initialSubjects) {
+        // TODO: Put subjects in box
+      }
+    }
+  }
 
   List<Subject> getSubjects() {
     return _initialSubjects + _initialSubjects + _initialSubjects;

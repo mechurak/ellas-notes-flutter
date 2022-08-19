@@ -26,7 +26,7 @@ void main() async {
   // );
   await loadConfig();
   registerHttpService();
-  await Hive.initFlutter("hive_boxes");
+  await Hive.initFlutter("hive_boxes");  // Hive 파일들 저장할 경로 지정
   runApp(const MyApp());
 }
 
