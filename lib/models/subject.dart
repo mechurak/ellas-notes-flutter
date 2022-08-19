@@ -1,12 +1,32 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'subject.g.dart';
+
+@HiveType(typeId: 1)
 class Subject {
+  @HiveField(0)
+  int subjectId;
+
+  @HiveField(1)
   String title;
+
+  @HiveField(2)
   String sheetId;
+
+  @HiveField(3)
   DateTime lastUpdate;
+
+  @HiveField(4)
   String description;
+
+  @HiveField(5)
   String link;
+
+  @HiveField(6)
   String imageUrl;
 
   Subject({
+    required this.subjectId,
     required this.title,
     required this.sheetId,
     required this.lastUpdate,
@@ -17,6 +37,7 @@ class Subject {
 
   factory Subject.fromMap(Map subject) {
     return Subject(
+      subjectId: subject["subjectId"],
       title: subject["title"],
       sheetId: subject["sheetId"],
       lastUpdate: subject["lastUpdate"],
@@ -28,6 +49,7 @@ class Subject {
 
   Map toMap() {
     return {
+      "subjectId": subjectId,
       "title": title,
       "sheetId": sheetId,
       "lastUpdate": lastUpdate,

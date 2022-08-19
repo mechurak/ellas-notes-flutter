@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/subject.dart';
 import '../repositories/subject_repository.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late double _deviceHeight, _deviceWidth;
+  Box? _box;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _subjectList(),
+                _subjectView(),
               ],
             ),
           ),
@@ -56,8 +58,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _subjectView() {
+    return FutureBuilder(
+      future: SubjectRepository().openBoxWithPreload(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          _box = snapshot.data;
+          return _subjectList();
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
   Widget _subjectList() {
-    List subjects = SubjectRepository().getSubjects();
+    List subjects = _box!.values.toList();
+
     return Expanded(
       child: ListView.separated(
         itemCount: subjects.length,
