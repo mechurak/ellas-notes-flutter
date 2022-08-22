@@ -7,7 +7,7 @@ class SubjectRepository {
 
   final List<Subject> _initialSubjects = [
     Subject(
-      subjectId: 0,
+      subjectId: 1,
       title: "정면돌파 스피킹 template",
       sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
       lastUpdate: DateTime.now(),
@@ -16,16 +16,16 @@ class SubjectRepository {
       imageUrl: "https://static.ebs.co.kr/images/public/courses/2021/02/19/20/ER2017H0SPE01ZZ/8f8797ce-8085-4a0f-9681-4df159c3de17.jpg",
     ),
     Subject(
-      subjectId: 1,
-      title: "입트영 60 (일상생활편) template",
-      sheetId: "1GeK1Kz8GycGMYviq52sqV3-WKoI8Gw7llSOvJekp01s",
+      subjectId: 2,
+      title: "강성태 66일 영어회화",
+      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
       lastUpdate: DateTime.now(),
-      description: "영어가 더 유창해지는 <입이 트이는 영어> 베스트 컬렉션",
-      link: "https://book.naver.com/bookdb/book_detail.nhn?bid:16744854",
-      imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/937/x9788954753937.jpg",
+      description: "당신의 영어가 습관이 되게에 충분한 시간",
+      link: "https://gongsin.com/courses/intro/c/show?cate=%EC%98%81%EC%96%B4%ED%9A%8C%ED%99%94",
+      imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/006/x9791130679006.jpg",
     ),
     Subject(
-      subjectId: 2,
+      subjectId: 3,
       title: "귀트영 template",
       sheetId: "1FaIhdmMIa77CoZCkhVly1rPrSdRs6Fg3ZIR5ofGu7hw",
       lastUpdate: DateTime.now(),
