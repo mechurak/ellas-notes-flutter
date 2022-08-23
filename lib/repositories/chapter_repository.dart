@@ -1,6 +1,10 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
 import '../models/chapter.dart';
 
 class ChapterRepository {
+  static const String chapterBox = 'chapter';
+
   final List<Chapter> _fakeChapters = [
     Chapter(
       subjectId: 1,
@@ -250,6 +254,21 @@ class ChapterRepository {
       quizCount: 0,
     ),
   ];
+
+  Future<Box?> openBoxWithPreload() async {
+    if (await Hive.boxExists(chapterBox)) {
+      print("openBoxWithPreload().chapter box exists. do nothing");
+      Box box = await Hive.openBox(chapterBox);
+      return box;
+    } else {
+      print("openBoxWithPreload(). First time openBox for chapter box");
+      Box box = await Hive.openBox(chapterBox);
+      for (Chapter chapter in _fakeChapters) {
+        box.add(chapter);
+      }
+      return box;
+    }
+  }
 
   List<Chapter> getChapters() {
     return _fakeChapters;

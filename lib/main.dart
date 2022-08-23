@@ -11,7 +11,9 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'models/app_config.dart';
+import 'models/chapter.dart';
 import 'models/subject.dart';
+import 'models/word.dart';
 import 'pages/game_page.dart';
 import 'pages/home_page.dart';
 import 'pages/lecture_page.dart';
@@ -29,6 +31,9 @@ void main() async {
   registerHttpService();
   await Hive.initFlutter("hive_boxes");  // Hive 파일들 저장할 경로 지정
   Hive.registerAdapter(SubjectAdapter()); // add here
+  Hive.registerAdapter(ChapterAdapter());
+  Hive.registerAdapter(WordAdapter());
+
   runApp(const MyApp());
 }
 

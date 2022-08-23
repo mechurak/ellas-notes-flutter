@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/chapter.dart';
+import '../models/subject.dart';
 import '../repositories/chapter_repository.dart';
 import 'lecture_page.dart';
 
 class ChapterPage extends StatefulWidget {
-  final String subject;
+  final Subject subject;
 
   const ChapterPage({Key? key, required this.subject}) : super(key: key);
 
@@ -15,6 +17,7 @@ class ChapterPage extends StatefulWidget {
 
 class _ChapterPageState extends State<ChapterPage> {
   late double _deviceHeight, _deviceWidth;
+  Box? _box;
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +26,17 @@ class _ChapterPageState extends State<ChapterPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.subject),
+        title: Text(widget.subject.title),
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.05),
           child: Center(
             child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _chapterList(),
+                  _chapterView(),
                 ]),
           ),
         ),
@@ -42,10 +44,27 @@ class _ChapterPageState extends State<ChapterPage> {
     );
   }
 
+  Widget _chapterView() {
+    return FutureBuilder(
+      future: ChapterRepository().openBoxWithPreload(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          _box = snapshot.data;
+          return _chapterList();
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
   Widget _chapterList() {
-    List chapters = ChapterRepository().getChapters();
+    List chapters = _box!.values.where((chapter) => chapter.subjectId == widget.subject.subjectId).toList();
     return Expanded(
       child: ListView.separated(
+        padding: const EdgeInsets.all(16.0),
         itemCount: chapters.length,
         itemBuilder: (BuildContext context, int index) {
           return _chapterTile(chapters[index]);
@@ -65,8 +84,7 @@ class _ChapterPageState extends State<ChapterPage> {
           MaterialPageRoute(
             builder: (BuildContext context) {
               return LecturePage(
-                subjectId: chapter.subjectId,
-                chapterNameForId: chapter.nameForId,
+                chapter: chapter,
               );
             },
           ),

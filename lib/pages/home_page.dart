@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.05),
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -79,6 +78,7 @@ class _HomePageState extends State<HomePage> {
 
     return Expanded(
       child: ListView.separated(
+        padding: const EdgeInsets.all(16.0),
         itemCount: subjects.length,
         itemBuilder: (BuildContext context, int index) {
           return _subjectTile(subjects[index]);
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return ChapterPage(subject: subject.title);
+              return ChapterPage(subject: subject);
             },
           ),
         );

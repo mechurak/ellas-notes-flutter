@@ -1,6 +1,10 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
 import '../models/word.dart';
 
 class LectureRepository {
+  static const String wordBox = 'word';
+
   final List<Word> _fakeWords = [
     Word(
       subjectId: 2,
@@ -17,7 +21,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 2,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m John Carter.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":3}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m John Carter.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":3}]}',
       hint: '저는 존 카터입니다.',
       note: null,
       memo: null,
@@ -27,7 +32,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 3,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m glad / you came.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":3},{"format":{"bold":true},"startIndex":11},{"format":{},"startIndex":19}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m glad / you came.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":3},{"format":{"bold":true},"startIndex":11},{"format":{},"startIndex":19}]}',
       hint: '나는 기뻐요 / 당신이 와서.',
       note: null,
       memo: null,
@@ -37,7 +43,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 4,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m here / to return this book.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":3},{"format":{"bold":true},"startIndex":11},{"format":{},"startIndex":30}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m here / to return this book.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":3},{"format":{"bold":true},"startIndex":11},{"format":{},"startIndex":30}]}',
       hint: '나는 여기 있어요 / 이 책을 반납하려고.',
       note: null,
       memo: null,
@@ -57,7 +64,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 12,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sorry / to disturb you.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":9},{"format":{"bold":true},"startIndex":12},{"format":{"bold":true,"italic":true},"startIndex":15},{"format":{"bold":true,"italic":true,"underline":true},"startIndex":17},{"format":{"bold":true},"startIndex":22},{"format":{},"startIndex":26}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sorry / to disturb you.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":9},{"format":{"bold":true},"startIndex":12},{"format":{"bold":true,"italic":true},"startIndex":15},{"format":{"bold":true,"italic":true,"underline":true},"startIndex":17},{"format":{"bold":true},"startIndex":22},{"format":{},"startIndex":26}]}',
       hint: '나는 미안해요 / 당신을 방해해서.',
       note: "disturb /dɪˈstɜrb/ 방해하다, 폐를 끼치다",
       memo: null,
@@ -67,7 +75,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 13,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sorry / to hear that.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":9},{"format":{"bold":true},"startIndex":12},{"format":{},"startIndex":24}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sorry / to hear that.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":9},{"format":{"bold":true},"startIndex":12},{"format":{},"startIndex":24}]}',
       hint: '나는 유감이에요 / 그것을 듣게 되어.',
       note: null,
       memo: null,
@@ -77,7 +86,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 14,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sorry / about the delay.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":9},{"format":{"bold":true},"startIndex":12},{"format":{"bold":true,"italic":true},"startIndex":22},{"format":{"bold":true,"italic":true,"underline":true},"startIndex":24},{"format":{},"startIndex":27}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sorry / about the delay.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":9},{"format":{"bold":true},"startIndex":12},{"format":{"bold":true,"italic":true},"startIndex":22},{"format":{"bold":true,"italic":true,"underline":true},"startIndex":24},{"format":{},"startIndex":27}]}',
       hint: '나는 미안해 / 늦어서.',
       note: "delay /dɪˈleɪ/ 지연, 연기",
       memo: null,
@@ -97,7 +107,8 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 22,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sure / it\u0027ll be OK.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":8},{"format":{"bold":true},"startIndex":11},{"format":{},"startIndex":22}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sure / it\u0027ll be OK.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":8},{"format":{"bold":true},"startIndex":11},{"format":{},"startIndex":22}]}',
       hint: '나는 확신해요 / 괜찮을 거라고.',
       note: null,
       memo: null,
@@ -107,12 +118,28 @@ class LectureRepository {
       chapterNameForId: "DAY 01 a",
       order: 23,
       quizType: 0,
-      text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sure / we can win first prize.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":8},{"format":{"bold":true},"startIndex":11},{"format":{"bold":true,"italic":true},"startIndex":18},{"format":{"bold":true},"startIndex":21},{"format":{},"startIndex":33}]}',
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sure / we can win first prize.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":8},{"format":{"bold":true},"startIndex":11},{"format":{"bold":true,"italic":true},"startIndex":18},{"format":{"bold":true},"startIndex":21},{"format":{},"startIndex":33}]}',
       hint: '나는 확신해요 / 우리가 1등 상을 탈 수 있을 거라고.',
       note: null,
       memo: null,
     ),
   ];
+
+  Future<Box?> openBoxWithPreload() async {
+    if (await Hive.boxExists(wordBox)) {
+      print("openBoxWithPreload(). word box exists. do nothing");
+      Box box = await Hive.openBox(wordBox);
+      return box;
+    } else {
+      print("openBoxWithPreload(). First time openBox for word box");
+      Box box = await Hive.openBox(wordBox);
+      for (Word word in _fakeWords) {
+        box.add(word);
+      }
+      return box;
+    }
+  }
 
   List<Word> getWords() {
     return _fakeWords;

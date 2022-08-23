@@ -1,14 +1,40 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'chapter.g.dart';
+
+@HiveType(typeId: 2)
 class Chapter {
+  @HiveField(0)
   int subjectId;
+
+  @HiveField(1)
   String nameForId;
+
+  @HiveField(2)
   String title;
+
+  @HiveField(3)
   String? category;
+
+  @HiveField(4)
   String? remoteUrl;
+
+  @HiveField(5)
   String? localUrl;
+
+  @HiveField(6)
   String? link1;
+
+  @HiveField(7)
   String? link2;
+
+  @HiveField(8)
   DateTime lastStudyDate;
+
+  @HiveField(9)
   int studyPoint;
+
+  @HiveField(10)
   int quizCount;
 
   Chapter({
