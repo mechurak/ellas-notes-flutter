@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:ellas_notes_flutter/googlesheet/index_holder.dart';
+import 'package:ellas_notes_flutter/googlesheet/sheet_helper.dart';
+import 'package:ellas_notes_flutter/models/word.dart';
 import 'package:ellas_notes_flutter/secrets.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
@@ -30,18 +33,29 @@ void main() async {
     }
   }
 
+  int? frozenRowCount = day56Sheet?.properties?.gridProperties?.frozenRowCount;
+  if (frozenRowCount != 2) {
+    print("unexpected frozenRowCount: $frozenRowCount");
+    return;
+  }
+
+  IndexHolder indexHolder = IndexHolder();
   GridData gridData = day56Sheet!.data![0];
   List<RowData> rowDataList = gridData.rowData!;
-  for (RowData row in rowDataList) {
-    List<CellData> cells = row.values!;
+  for (int i = 0; i < rowDataList.length; i++) {
+    List<CellData> cells = rowDataList[i].values!;
 
-    for (CellData cell in cells) {
-      if (cell.formattedValue != null) {
-        print(cell.formattedValue);
-      }
-      if (cell.textFormatRuns != null) {
-        print(jsonEncode(cell.textFormatRuns));  // jsonEncode : https://docs.flutter.dev/development/data-and-backend/json
-      }
+    if (i < frozenRowCount!) {
+      indexHolder.setColumnIndices(rowDataList[i]);
+    }
+    else if (cells[indexHolder.order].formattedValue == null) {
+      print("order is null. row: $i");
+    }
+    else if (cells[indexHolder.order].formattedValue == "0") {
+      // TODO: Add Chapter
+    } else {
+      Word word = SheetHelper.getWord(indexHolder, cells, 1);
+      print(word);
     }
   }
 }

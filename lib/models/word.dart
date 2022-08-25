@@ -42,4 +42,9 @@ class Word {
     this.memo,
     this.link,
   });
+
+  @override
+  String toString() {
+    return 'Word{subjectId: $subjectId, chapterNameForId: $chapterNameForId, order: $order, quizType: $quizType, text: $text, hint: $hint, note: $note, memo: $memo, link: $link}';
+  }
 }
