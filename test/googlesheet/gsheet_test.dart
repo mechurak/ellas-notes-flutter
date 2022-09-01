@@ -47,11 +47,9 @@ void main() async {
 
     if (i < frozenRowCount!) {
       indexHolder.setColumnIndices(rowDataList[i]);
-    }
-    else if (cells[indexHolder.order].formattedValue == null) {
+    } else if (cells[indexHolder.order].formattedValue == null) {
       print("order is null. row: $i");
-    }
-    else if (cells[indexHolder.order].formattedValue == "0") {
+    } else if (cells[indexHolder.order].formattedValue == "0") {
       // TODO: Add Chapter
     } else {
       Word word = SheetHelper.getWord(indexHolder, cells, 1);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../googlesheet/sheet_helper.dart';
 import '../models/chapter.dart';
 import '../models/word.dart';
 import '../repositories/lecture_repository.dart';
@@ -78,10 +79,6 @@ class _LecturePageState extends State<LecturePage> {
   }
 
   Widget _wordTile(Word word) {
-    return ListTile(
-      onTap: () {},
-      title: Text(word.text),
-      subtitle: word.note != null ? Text(word.note!) : null,
-    );
+    return SheetHelper.getRichText(word.text);
   }
 }
