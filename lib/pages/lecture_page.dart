@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -66,7 +68,7 @@ class _LecturePageState extends State<LecturePage> {
         _box!.values.where((word) => (word.subjectId == widget.chapter.subjectId) && (word.chapterNameForId == widget.chapter.nameForId)).toList();
     return Expanded(
       child: ListView.separated(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
         itemCount: words.length,
         itemBuilder: (BuildContext context, int index) {
           return _wordTile(words[index]);
@@ -79,6 +81,48 @@ class _LecturePageState extends State<LecturePage> {
   }
 
   Widget _wordTile(Word word) {
-    return SheetHelper.getRichText(word.text);
+    List<Widget> children = [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: SheetHelper.getRichText(word.text),
+      )
+    ];
+    if (word.hint != null) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(word.hint!, style: const TextStyle(fontStyle: FontStyle.italic)),
+        ),
+      );
+    }
+    if (word.note != null) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(word.note!, style: const TextStyle(fontSize: 12)),
+        ),
+      );
+    }
+    if (word.memo != null) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(word.memo!, style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
+        ),
+      );
+    }
+
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4), //const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children,
+          ),
+        ),
+        Text(word.order.toString(), style: const TextStyle(fontSize: 12, fontFeatures: [FontFeature.superscripts()])),
+      ],
+    );
   }
 }

@@ -33,40 +33,33 @@ class SheetHelper {
     String tempStr = cellData.formattedValue!;
     List<TextSpan> children = [];
 
+    if (tempStr.startsWith('##')) {
+      TextSpan span = TextSpan(
+        text: tempStr,
+        style: const TextStyle(
+          color: Colors.orange,
+        ),
+      );
+      children.add(span);
+
+      return RichText(
+        text: TextSpan(
+          text: '',
+          children: children,
+        ),
+      );
+    }
+
     if (cellData.textFormatRuns != null) {
       TextFormatRun curItem = cellData.textFormatRuns![0];
       curItem.startIndex = 0;
 
       for (int i = 1; i < cellData.textFormatRuns!.length; i++) {
         TextFormatRun nextItem = cellData.textFormatRuns![i];
-
-        int prevEndIndex = nextItem.startIndex!;
-
-        var bgColor = curItem.format?.underline == true ? Colors.yellow : null;
-        var color = curItem.format?.italic == true ? Colors.purple : Colors.black;
-
-        TextSpan span = TextSpan(
-          text: tempStr.substring(curItem.startIndex!, prevEndIndex),
-          style: TextStyle(
-            color: color,
-            backgroundColor: bgColor,
-          ),
-        );
-        children.add(span);
+        children.add(_getTextSpan(tempStr, curItem, nextItem));
         curItem = nextItem;
       }
-
-      // last item
-      var bgColor = curItem.format?.underline == true ? Colors.yellow : null;
-      var color = curItem.format?.italic == true ? Colors.purple : null;
-      TextSpan span = TextSpan(
-        text: tempStr.substring(curItem.startIndex!),
-        style: TextStyle(
-          color: color,
-          backgroundColor: bgColor,
-        ),
-      );
-      children.add(span);
+      children.add(_getTextSpan(tempStr, curItem, null)); // last item
     } else {
       TextSpan span = TextSpan(
         text: tempStr,
@@ -81,6 +74,19 @@ class SheetHelper {
       text: TextSpan(
         text: '',
         children: children,
+      ),
+    );
+  }
+
+  static TextSpan _getTextSpan(String wholeText, TextFormatRun curItem, TextFormatRun? nextItem) {
+    int? prevEndIndex = nextItem?.startIndex;
+    var bgColor = curItem.format?.underline == true ? Colors.yellow : null;
+    var color = curItem.format?.italic == true ? Colors.purple : Colors.black;
+    return TextSpan(
+      text: wholeText.substring(curItem.startIndex!, prevEndIndex),
+      style: TextStyle(
+        color: color,
+        backgroundColor: bgColor,
       ),
     );
   }
