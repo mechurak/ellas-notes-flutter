@@ -5,40 +5,44 @@ part 'chapter.g.dart';
 @HiveType(typeId: 2)
 class Chapter {
   @HiveField(0)
-  String sheetId;
+  int key;
 
   @HiveField(1)
-  String nameForId;
+  int subjectKey;
 
   @HiveField(2)
-  String title;
+  String nameForId;
 
   @HiveField(3)
-  String? category;
+  String title;
 
   @HiveField(4)
-  String? remoteUrl;
+  String? category;
 
   @HiveField(5)
-  String? localUrl;
+  String? remoteUrl;
 
   @HiveField(6)
-  String? link1;
+  String? localUrl;
 
   @HiveField(7)
-  String? link2;
+  String? link1;
 
   @HiveField(8)
-  DateTime lastStudyDate;
+  String? link2;
 
   @HiveField(9)
-  int studyPoint;
+  DateTime lastStudyDate;
 
   @HiveField(10)
+  int studyPoint;
+
+  @HiveField(11)
   int quizCount;
 
   Chapter({
-    required this.sheetId,
+    required this.key,
+    required this.subjectKey,
     required this.nameForId,
     required this.title,
     required this.category,
@@ -53,7 +57,8 @@ class Chapter {
 
   factory Chapter.fromMap(Map chapter) {
     return Chapter(
-      sheetId: chapter["sheetId"],
+      key: chapter["key"],
+      subjectKey: chapter["subjectKey"],
       nameForId: chapter["nameForId"],
       title: chapter["title"],
       category: chapter["category"],
@@ -69,7 +74,8 @@ class Chapter {
 
   Map toMap() {
     return {
-      "sheetId": sheetId,
+      "key": key,
+      "subjectKey": subjectKey,
       "nameForId": nameForId,
       "title": title,
       "category": category,

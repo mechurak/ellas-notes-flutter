@@ -7,8 +7,8 @@ class LectureRepository {
 
   final List<Word> _fakeWords = [
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 1,
       quizType: 0,
       text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"## 001: I\u0027m"}',
@@ -17,8 +17,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 2,
       quizType: 0,
       text:
@@ -28,8 +28,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 3,
       quizType: 0,
       text:
@@ -39,8 +39,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 4,
       quizType: 0,
       text:
@@ -50,8 +50,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 11,
       quizType: 0,
       text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"## 002: I\u0027m sorry ( to+동사 / about )"}',
@@ -60,8 +60,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 12,
       quizType: 0,
       text:
@@ -71,8 +71,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 13,
       quizType: 0,
       text:
@@ -82,8 +82,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 14,
       quizType: 0,
       text:
@@ -93,8 +93,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 21,
       quizType: 0,
       text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"## 003: I\u0027m sure"}',
@@ -103,8 +103,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 22,
       quizType: 0,
       text:
@@ -114,8 +114,8 @@ class LectureRepository {
       memo: null,
     ),
     Word(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
-      chapterNameForId: "DAY 01 a",
+      subjectKey: 1,
+      chapterKey: 10,
       order: 23,
       quizType: 0,
       text:

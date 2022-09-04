@@ -7,6 +7,7 @@ class SubjectRepository {
 
   final List<Subject> _initialSubjects = [
     Subject(
+      key: 0,
       sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
       title: "정면돌파 스피킹 template",
       lastUpdate: DateTime.now(),
@@ -15,6 +16,7 @@ class SubjectRepository {
       imageUrl: "https://static.ebs.co.kr/images/public/courses/2021/02/19/20/ER2017H0SPE01ZZ/8f8797ce-8085-4a0f-9681-4df159c3de17.jpg",
     ),
     Subject(
+      key: 1,
       sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
       title: "강성태 66일 영어회화",
       lastUpdate: DateTime.now(),
@@ -23,6 +25,7 @@ class SubjectRepository {
       imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/006/x9791130679006.jpg",
     ),
     Subject(
+      key: 2,
       sheetId: "1FaIhdmMIa77CoZCkhVly1rPrSdRs6Fg3ZIR5ofGu7hw",
       title: "귀트영 template",
       lastUpdate: DateTime.now(),
@@ -38,11 +41,13 @@ class SubjectRepository {
       Box box = await Hive.openBox(subjectBox);
       return box;
     } else {
-      print("openBoxWithPreload(). First time openBox");
+      print("openBoxWithPreload(). First time openBox for subject box");
       Box box = await Hive.openBox(subjectBox);
-      // final Box box = Hive.box(subjectBox);
       for (Subject subject in _initialSubjects) {
-        box.put(subject.sheetId, subject);
+        int key = await box.add(subject);
+        subject.key = key;
+        box.put(key, subject);
+        print('- add key: $key, subject: ${subject.title}');
       }
       return box;
     }
@@ -50,7 +55,13 @@ class SubjectRepository {
 
   Future<void> updateSubject(Subject subject) async {
     Box box = Hive.box(subjectBox);
-    box.put(subject.sheetId, subject);
+    if (subject.key == -1) {
+      int key = await box.add(subject);
+      subject.key = key;
+      box.put(key, subject);
+    } else {
+      box.put(subject.key, subject);
+    }
   }
 
   List<Subject> getSubjects() {

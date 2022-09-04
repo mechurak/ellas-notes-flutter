@@ -17,45 +17,48 @@ class ChapterAdapter extends TypeAdapter<Chapter> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Chapter(
-      sheetId: fields[0] as String,
-      nameForId: fields[1] as String,
-      title: fields[2] as String,
-      category: fields[3] as String?,
-      remoteUrl: fields[4] as String?,
-      localUrl: fields[5] as String?,
-      link1: fields[6] as String?,
-      link2: fields[7] as String?,
-      lastStudyDate: fields[8] as DateTime,
-      studyPoint: fields[9] as int,
-      quizCount: fields[10] as int,
+      key: fields[0] as int,
+      subjectKey: fields[1] as int,
+      nameForId: fields[2] as String,
+      title: fields[3] as String,
+      category: fields[4] as String?,
+      remoteUrl: fields[5] as String?,
+      localUrl: fields[6] as String?,
+      link1: fields[7] as String?,
+      link2: fields[8] as String?,
+      lastStudyDate: fields[9] as DateTime,
+      studyPoint: fields[10] as int,
+      quizCount: fields[11] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Chapter obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
-      ..write(obj.sheetId)
+      ..write(obj.key)
       ..writeByte(1)
-      ..write(obj.nameForId)
+      ..write(obj.subjectKey)
       ..writeByte(2)
-      ..write(obj.title)
+      ..write(obj.nameForId)
       ..writeByte(3)
-      ..write(obj.category)
+      ..write(obj.title)
       ..writeByte(4)
-      ..write(obj.remoteUrl)
+      ..write(obj.category)
       ..writeByte(5)
-      ..write(obj.localUrl)
+      ..write(obj.remoteUrl)
       ..writeByte(6)
-      ..write(obj.link1)
+      ..write(obj.localUrl)
       ..writeByte(7)
-      ..write(obj.link2)
+      ..write(obj.link1)
       ..writeByte(8)
-      ..write(obj.lastStudyDate)
+      ..write(obj.link2)
       ..writeByte(9)
-      ..write(obj.studyPoint)
+      ..write(obj.lastStudyDate)
       ..writeByte(10)
+      ..write(obj.studyPoint)
+      ..writeByte(11)
       ..write(obj.quizCount);
   }
 

@@ -7,7 +7,8 @@ class ChapterRepository {
 
   final List<Chapter> _fakeChapters = [
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 0,
+      subjectKey: 0,
       nameForId: "2021-08-09",
       title: "616강 모바일 교통",
       category: "Mobile Services (2)",
@@ -20,7 +21,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 1,
+      subjectKey: 0,
       nameForId: "2021-08-10",
       title: "617강 모바일 학습",
       category: "Mobile Services (2)",
@@ -33,7 +35,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 2,
+      subjectKey: 0,
       nameForId: "2021-08-11",
       title: "618강 모바일 음원/영상",
       category: "Mobile Services (2)",
@@ -46,7 +49,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 3,
+      subjectKey: 0,
       nameForId: "2021-08-12",
       title: "619강 모바일 지도/네비게이션",
       category: "Mobile Services (2)",
@@ -59,7 +63,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 4,
+      subjectKey: 0,
       nameForId: "2021-08-13",
       title: "620강 모바일 게임",
       category: "Mobile Services (2)",
@@ -72,7 +77,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 5,
+      subjectKey: 0,
       nameForId: "2021-08-16",
       title: "621강 휴대폰 주변기기",
       category: "Cell Phones",
@@ -85,7 +91,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 6,
+      subjectKey: 0,
       nameForId: "2021-08-17",
       title: "622강 휴대폰 케이스",
       category: "Cell Phones",
@@ -98,7 +105,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 7,
+      subjectKey: 0,
       nameForId: "2021-08-18",
       title: "623강 휴대폰 배터리",
       category: "Cell Phones",
@@ -111,7 +119,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 8,
+      subjectKey: 0,
       nameForId: "2021-08-19",
       title: "624강 휴대폰 고장",
       category: "Cell Phones",
@@ -124,7 +133,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ",
+      key: 9,
+      subjectKey: 0,
       nameForId: "2021-08-20",
       title: "625강 휴대폰 분실",
       category: "Cell Phones",
@@ -137,7 +147,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 10,
+      subjectKey: 1,
       nameForId: "DAY 01 a",
       title: "1. I'm",
       category: "Day 1",
@@ -150,7 +161,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 11,
+      subjectKey: 1,
       nameForId: "DAY 01 b",
       title: "1. I'm sorry to disturb you.",
       category: "Day 1",
@@ -163,7 +175,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 12,
+      subjectKey: 1,
       nameForId: "DAY 02 a",
       title: "2. It's",
       category: "Day 2",
@@ -176,7 +189,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 13,
+      subjectKey: 1,
       nameForId: "DAY 02 b",
       title: "2. It's nice to meet you.",
       category: "Day 2",
@@ -189,7 +203,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 14,
+      subjectKey: 1,
       nameForId: "DAY 03 a",
       title: "3. Do you",
       category: "Day 3",
@@ -202,7 +217,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 15,
+      subjectKey: 1,
       nameForId: "DAY 03 b",
       title: "3. Do you have a minute?",
       category: "Day 3",
@@ -215,7 +231,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 16,
+      subjectKey: 1,
       nameForId: "DAY 04 a",
       title: "4. I'll",
       category: "Day 4",
@@ -228,7 +245,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 17,
+      subjectKey: 1,
       nameForId: "DAY 04 b",
       title: "4. I'll take two pieces",
       category: "Day 4",
@@ -241,7 +259,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
+      key: 18,
+      subjectKey: 1,
       nameForId: "DAY 05 a",
       title: "5. That's",
       category: "Day 5",
@@ -264,10 +283,17 @@ class ChapterRepository {
       print("openBoxWithPreload(). First time openBox for chapter box");
       Box box = await Hive.openBox(chapterBox);
       for (Chapter chapter in _fakeChapters) {
-        box.add(chapter);
+        int key = await box.add(chapter);
+        chapter.key = key;
+        box.put(key, chapter);
+        print('- add key: $key, nameForId: ${chapter.nameForId}, title: ${chapter.title}');
       }
       return box;
     }
+  }
+
+  Future<void> getChaptersBySubjectKey(int subjectKey) async{
+    Box box = Hive.box(chapterBox);
   }
 
   List<Chapter> getChapters() {

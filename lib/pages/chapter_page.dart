@@ -61,7 +61,7 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Widget _chapterList() {
-    List chapters = _box!.values.where((chapter) => chapter.sheetId == widget.subject.sheetId).toList();
+    List chapters = _box!.values.where((chapter) => chapter.subjectKey == widget.subject.key).toList();
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.all(16.0),

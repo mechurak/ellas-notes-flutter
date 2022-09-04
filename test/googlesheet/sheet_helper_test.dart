@@ -46,6 +46,7 @@ void main() {
 
   test('updateSubjectInfo() test', () async {
     var tempSubject = Subject(
+      key: -1,
       sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
       title: "강성태 66일 영어회화",
       lastUpdate: DateTime.now(),

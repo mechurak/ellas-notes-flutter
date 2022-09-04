@@ -12,7 +12,7 @@ import '../repositories/subject_repository.dart';
 import '../secrets.dart';
 
 class SheetHelper {
-  static Word getWord(IndexHolder idx, List<CellData> cells, String sheetId) {
+  static Word getWord(IndexHolder idx, List<CellData> cells, int subjectKey, int chapterKey) {
     String? hint = (idx.hint > 0 && cells.length > idx.hint) ? cells[idx.hint].formattedValue : null;
     String? note = (idx.note > 0 && cells.length > idx.note) ? cells[idx.note].formattedValue : null;
     String? memo = (idx.memo > 0 && cells.length > idx.memo) ? cells[idx.memo].formattedValue : null;
@@ -20,8 +20,8 @@ class SheetHelper {
     int quiz = (quizTemp != null) ? int.parse(quizTemp) : 0;
 
     return Word(
-      sheetId: sheetId,
-      chapterNameForId: cells[idx.nameForId].formattedValue!,
+      subjectKey: subjectKey,
+      chapterKey: chapterKey,
       order: int.parse(cells[idx.order].formattedValue!),
       quizType: quiz,
       text: jsonEncode(cells[idx.text]),
@@ -146,11 +146,12 @@ class SheetHelper {
   static Future<Subject> _createOrGetSubject(String title, String spreadsheetId) async {
     Box subjectBox = (await SubjectRepository().openBoxWithPreload())!;
 
-    if (subjectBox.containsKey(spreadsheetId)) {
+    if (subjectBox.values.where((subject) => subject.sheetId == spreadsheetId).isNotEmpty) {
       return subjectBox.get(spreadsheetId);
     } else {
       print('new sheetId!. create subject for $title');
       return Subject(
+        key: -1,
         sheetId: spreadsheetId,
         title: title,
         lastUpdate: DateTime.now(),
@@ -194,7 +195,7 @@ class SheetHelper {
           image = cells[1].formattedValue;
           break;
         default:
-          // print('unexpected key. ${cells[0].formattedValue}. row: ${i + 1}');
+        // print('unexpected key. ${cells[0].formattedValue}. row: ${i + 1}');
       }
     }
 
