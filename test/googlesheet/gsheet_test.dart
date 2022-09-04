@@ -52,7 +52,7 @@ void main() async {
     } else if (cells[indexHolder.order].formattedValue == "0") {
       // TODO: Add Chapter
     } else {
-      Word word = SheetHelper.getWord(indexHolder, cells, 1);
+      Word word = SheetHelper.getWord(indexHolder, cells, _spreadsheetId);
       print(word);
     }
   }

@@ -17,7 +17,7 @@ class WordAdapter extends TypeAdapter<Word> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Word(
-      subjectId: fields[0] as int,
+      sheetId: fields[0] as String,
       chapterNameForId: fields[1] as String,
       order: fields[2] as int,
       quizType: fields[3] as int,
@@ -34,7 +34,7 @@ class WordAdapter extends TypeAdapter<Word> {
     writer
       ..writeByte(9)
       ..writeByte(0)
-      ..write(obj.subjectId)
+      ..write(obj.sheetId)
       ..writeByte(1)
       ..write(obj.chapterNameForId)
       ..writeByte(2)

@@ -5,30 +5,26 @@ part 'subject.g.dart';
 @HiveType(typeId: 1)
 class Subject {
   @HiveField(0)
-  int subjectId;
+  String sheetId;
 
   @HiveField(1)
   String title;
 
   @HiveField(2)
-  String sheetId;
-
-  @HiveField(3)
   DateTime lastUpdate;
 
+  @HiveField(3)
+  String? description;
+
   @HiveField(4)
-  String description;
+  String? link;
 
   @HiveField(5)
-  String link;
-
-  @HiveField(6)
-  String imageUrl;
+  String? imageUrl;
 
   Subject({
-    required this.subjectId,
-    required this.title,
     required this.sheetId,
+    required this.title,
     required this.lastUpdate,
     required this.description,
     required this.link,
@@ -37,9 +33,8 @@ class Subject {
 
   factory Subject.fromMap(Map subject) {
     return Subject(
-      subjectId: subject["subjectId"],
-      title: subject["title"],
       sheetId: subject["sheetId"],
+      title: subject["title"],
       lastUpdate: subject["lastUpdate"],
       description: subject["description"],
       link: subject["link"],
@@ -49,9 +44,8 @@ class Subject {
 
   Map toMap() {
     return {
-      "subjectId": subjectId,
-      "title": title,
       "sheetId": sheetId,
+      "title": title,
       "lastUpdate": lastUpdate,
       "description": description,
       "link": link,

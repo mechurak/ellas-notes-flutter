@@ -17,7 +17,7 @@ class ChapterAdapter extends TypeAdapter<Chapter> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Chapter(
-      subjectId: fields[0] as int,
+      sheetId: fields[0] as String,
       nameForId: fields[1] as String,
       title: fields[2] as String,
       category: fields[3] as String?,
@@ -36,7 +36,7 @@ class ChapterAdapter extends TypeAdapter<Chapter> {
     writer
       ..writeByte(11)
       ..writeByte(0)
-      ..write(obj.subjectId)
+      ..write(obj.sheetId)
       ..writeByte(1)
       ..write(obj.nameForId)
       ..writeByte(2)

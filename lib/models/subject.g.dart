@@ -17,33 +17,30 @@ class SubjectAdapter extends TypeAdapter<Subject> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Subject(
-      subjectId: fields[0] as int,
+      sheetId: fields[0] as String,
       title: fields[1] as String,
-      sheetId: fields[2] as String,
-      lastUpdate: fields[3] as DateTime,
-      description: fields[4] as String,
-      link: fields[5] as String,
-      imageUrl: fields[6] as String,
+      lastUpdate: fields[2] as DateTime,
+      description: fields[3] as String?,
+      link: fields[4] as String?,
+      imageUrl: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Subject obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.subjectId)
+      ..write(obj.sheetId)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.sheetId)
-      ..writeByte(3)
       ..write(obj.lastUpdate)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.description)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.link)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.imageUrl);
   }
 

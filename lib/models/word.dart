@@ -5,7 +5,7 @@ part 'word.g.dart';
 @HiveType(typeId: 3)
 class Word {
   @HiveField(0)
-  int subjectId;
+  String sheetId;
 
   @HiveField(1)
   String chapterNameForId;
@@ -32,7 +32,7 @@ class Word {
   String? link;
 
   Word({
-    required this.subjectId,
+    required this.sheetId,
     required this.chapterNameForId,
     required this.order,
     required this.quizType,
@@ -45,6 +45,6 @@ class Word {
 
   @override
   String toString() {
-    return 'Word{subjectId: $subjectId, chapterNameForId: $chapterNameForId, order: $order, quizType: $quizType, text: $text, hint: $hint, note: $note, memo: $memo, link: $link}';
+    return 'Word{sheetId: $sheetId, chapterNameForId: $chapterNameForId, order: $order, quizType: $quizType, text: $text, hint: $hint, note: $note, memo: $memo, link: $link}';
   }
 }

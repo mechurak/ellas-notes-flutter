@@ -5,7 +5,7 @@ part 'chapter.g.dart';
 @HiveType(typeId: 2)
 class Chapter {
   @HiveField(0)
-  int subjectId;
+  String sheetId;
 
   @HiveField(1)
   String nameForId;
@@ -38,7 +38,7 @@ class Chapter {
   int quizCount;
 
   Chapter({
-    required this.subjectId,
+    required this.sheetId,
     required this.nameForId,
     required this.title,
     required this.category,
@@ -53,7 +53,7 @@ class Chapter {
 
   factory Chapter.fromMap(Map chapter) {
     return Chapter(
-      subjectId: chapter["subjectId"],
+      sheetId: chapter["sheetId"],
       nameForId: chapter["nameForId"],
       title: chapter["title"],
       category: chapter["category"],
@@ -69,7 +69,7 @@ class Chapter {
 
   Map toMap() {
     return {
-      "subjectId": subjectId,
+      "sheetId": sheetId,
       "nameForId": nameForId,
       "title": title,
       "category": category,

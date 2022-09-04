@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
         width: 75,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(subject.imageUrl),
+            image: NetworkImage(subject.imageUrl!),  // TODO: Consider null case
             fit: BoxFit.cover,
           ),
           borderRadius: const BorderRadius.all(
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      subtitle: Text(subject.description),
+      subtitle: Text(subject.description!),  // TODO: Consider null case
     );
   }
 }

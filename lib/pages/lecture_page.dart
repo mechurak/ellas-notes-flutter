@@ -65,7 +65,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _wordList() {
     List words =
-        _box!.values.where((word) => (word.subjectId == widget.chapter.subjectId) && (word.chapterNameForId == widget.chapter.nameForId)).toList();
+        _box!.values.where((word) => (word.sheetId == widget.chapter.sheetId) && (word.chapterNameForId == widget.chapter.nameForId)).toList();
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
