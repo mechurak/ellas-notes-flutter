@@ -253,6 +253,19 @@ class ChapterRepository {
       studyPoint: 0,
       quizCount: 0,
     ),
+    Chapter(
+      subjectKey: 1,
+      nameForKey: "DAY 05 temp",
+      title: "5. That's",
+      category: "Day 5",
+      remoteUrl: "https://docs.google.com/uc?export=open&id=1FxG1F0lBR8zkMfeLDpmF0LoNfQpTy5Me",
+      localUrl: null,
+      link1: null,
+      link2: null,
+      lastStudyDate: DateTime.now(),
+      studyPoint: 0,
+      quizCount: 0,
+    ),
   ];
 
   Future<Box?> openBoxWithPreload() async {
@@ -271,7 +284,7 @@ class ChapterRepository {
     }
   }
 
-  Future<Map<String, Chapter>> getChaptersBySubjectKey(int subjectKey) async{
+  Future<Map<String, Chapter>> getChaptersBySubjectKey(int subjectKey) async {
     Box box = Hive.box(chapterBox);
     Iterable chapters = box.values.where((chapter) => chapter.subjectKey == subjectKey);
     Map<String, Chapter> retMap = {};
@@ -279,6 +292,31 @@ class ChapterRepository {
       retMap[chapter.nameForKey] = chapter;
     }
     return retMap;
+  }
+
+  Map<String, Chapter> getFakeChaptersBySubjectKey(int subjectKey) {
+    Iterable chapters = _fakeChapters.where((chapter) => chapter.subjectKey == subjectKey);
+    Map<String, Chapter> retMap = {};
+    for (Chapter chapter in chapters) {
+      retMap[chapter.nameForKey] = chapter;
+    }
+    return retMap;
+  }
+
+  Future<void> updateChapters(int subjectKey, Iterable<Chapter> chapters) async {
+    Box box = Hive.box(chapterBox);
+
+    // Remove previous chapters
+    final Map<dynamic, dynamic> chapterMap = box.toMap();
+    List<dynamic> desiredKeys = [];
+    chapterMap.forEach((key, value) {
+      if (value.subjectKey == subjectKey) {
+        desiredKeys.add(key);
+      }
+    });
+    box.deleteAll(desiredKeys);
+
+    box.addAll(chapters);
   }
 
   List<Chapter> getChapters() {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ellas_notes_flutter/repositories/lecture_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
@@ -134,13 +135,12 @@ class SheetHelper {
     subject = updateSubjectInfo(subject, docInfoSheet);
     await SubjectRepository().updateSubject(subject);
 
-    // TODO: Upsert chapters and words
     Map<String, Chapter> chapterMap = await ChapterRepository().getChaptersBySubjectKey(subject.key);
-    Map<String, Chapter> newChapterMap = {};
-    Map<String, Chapter> remainedChapterMap = Map.from(chapterMap);
+    Set<String> remainedChapterSet = Set.from(chapterMap.keys);
     List<Word> words = [];
-
-    updateChaptersAndWords(chapterMap, newChapterMap, remainedChapterMap, words, subject, spreadsheet);
+    updateChaptersAndWords(chapterMap, remainedChapterSet, words, subject, spreadsheet);
+    await ChapterRepository().updateChapters(subject.key, chapterMap.values);
+    await LectureRepository().updateWords(subject.key, words);
 
     return true;
   }
@@ -238,8 +238,7 @@ class SheetHelper {
 
   static void updateChaptersAndWords(
     Map<String, Chapter> chapterMap,
-    Map<String, Chapter> newChapterMap,
-    Map<String, Chapter> remainedChapterMap,
+    Set<String> remainedChapterSet,
     List<Word> words,
     Subject subject,
     Spreadsheet spreadsheet,
@@ -262,7 +261,7 @@ class SheetHelper {
       IndexHolder indexHolder = IndexHolder();
 
       List<RowData> rowDataList = gridData.rowData!;
-      Chapter? prevChapter;
+      Chapter? curChapter;
       for (int i = 0; i < rowDataList.length; i++) {
         List<CellData> cells = rowDataList[i].values!;
 
@@ -272,13 +271,34 @@ class SheetHelper {
           print("order is null. row: $i");
         } else if (cells[indexHolder.order].formattedValue == "0") {
           Chapter chapterFromSheet = getChapter(indexHolder, cells, subject.key);
-          print(chapterFromSheet);
-          // TODO: Check previous and remained chapter map
+          // print(chapterFromSheet);
+          curChapter = chapterMap[chapterFromSheet.nameForKey];
+          if (curChapter != null) {
+            curChapter.title = chapterFromSheet.title;
+            curChapter.category = chapterFromSheet.category;
+            curChapter.remoteUrl = chapterFromSheet.remoteUrl;
+            curChapter.link1 = chapterFromSheet.link1;
+            curChapter.link2 = chapterFromSheet.link2;
+            curChapter.quizCount = 0; // Reset quizCount
 
+            remainedChapterSet.remove(chapterFromSheet.nameForKey);
+          } else {
+            curChapter = chapterFromSheet;
+            chapterMap[chapterFromSheet.nameForKey] = curChapter;
+          }
         } else {
           Word word = SheetHelper.getWord(indexHolder, cells, subject.key);
+          if (word.quizType > 0 && curChapter != null && word.chapterKey == curChapter.nameForKey) {
+            curChapter.quizCount += 1;
+          }
+          words.add(word);
         }
       }
+    }
+
+    for (String chapterKey in remainedChapterSet) {
+      print('Remove ${chapterMap[chapterKey]!.nameForKey}');
+      chapterMap.remove(chapterKey);
     }
   }
 }

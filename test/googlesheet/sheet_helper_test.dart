@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:ellas_notes_flutter/googlesheet/sheet_helper.dart';
+import 'package:ellas_notes_flutter/models/chapter.dart';
 import 'package:ellas_notes_flutter/models/subject.dart';
+import 'package:ellas_notes_flutter/models/word.dart';
+import 'package:ellas_notes_flutter/repositories/chapter_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:test/test.dart';
@@ -70,7 +73,7 @@ void main() {
 
   test('updateChaptersAndWords() test', () async {
     var tempSubject = Subject(
-      key: -1,
+      key: 1,
       sheetId: "1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE",
       title: "강성태 66일 영어회화",
       lastUpdate: DateTime.now(),
@@ -80,9 +83,24 @@ void main() {
     );
 
     const spreadsheetId = '1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE';
-
     Spreadsheet spreadsheet = await SheetHelper.getSpreadsheet(spreadsheetId);
 
-    SheetHelper.updateChaptersAndWords({}, {}, {}, [], tempSubject, spreadsheet);
+    Map<String, Chapter> chapterMap = ChapterRepository().getFakeChaptersBySubjectKey(tempSubject.key);
+    Set<String> remainedChapterSet = Set.from(chapterMap.keys);
+    List<Word> words = [];
+
+    print('chapterMap.length before: ${chapterMap.length}');
+    print('remainedChapterSet.length before: ${remainedChapterSet.length}');
+    print('words.length before: ${words.length}');
+
+    SheetHelper.updateChaptersAndWords(chapterMap, remainedChapterSet, words, tempSubject, spreadsheet);
+
+    print('chapterMap.length: ${chapterMap.length}');
+    print('remainedChapterSet.length: ${remainedChapterSet.length}');
+    print('words.length: ${words.length}');
+
+    for (Chapter chapter in chapterMap.values) {
+      print('${chapter.nameForKey} - quizCount: ${chapter.quizCount}, studyPoint: ${chapter.studyPoint}, lastStudyDate: ${chapter.lastStudyDate}');
+    }
   });
 }

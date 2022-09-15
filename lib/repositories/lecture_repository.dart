@@ -141,6 +141,22 @@ class LectureRepository {
     }
   }
 
+  Future<void> updateWords(int subjectKey, Iterable<Word> words) async {
+    Box box = Hive.box(wordBox);
+
+    // Remove previous words
+    final Map<dynamic, dynamic> wordMap = box.toMap();
+    List<dynamic> desiredKeys = [];
+    wordMap.forEach((key, value) {
+      if (value.subjectKey == subjectKey) {
+        desiredKeys.add(key);
+      }
+    });
+    box.deleteAll(desiredKeys);
+
+    box.addAll(words);
+  }
+
   List<Word> getWords() {
     return _fakeWords;
   }
