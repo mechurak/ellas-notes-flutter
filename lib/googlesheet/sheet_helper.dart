@@ -1,17 +1,40 @@
 import 'dart:convert';
 
-import 'package:ellas_notes_flutter/googlesheet/index_holder.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../models/chapter.dart';
 import '../models/subject.dart';
 import '../models/word.dart';
+import '../repositories/chapter_repository.dart';
 import '../repositories/subject_repository.dart';
 import '../secrets.dart';
+import 'index_holder.dart';
 
 class SheetHelper {
+  static Chapter getChapter(IndexHolder idx, List<CellData> cells, int subjectKey) {
+    String? category = (idx.metaCategory > 0 && cells.length > idx.metaCategory) ? cells[idx.metaCategory].formattedValue : null;
+    String? remoteUrl = (idx.metaRemoteUrl > 0 && cells.length > idx.metaRemoteUrl) ? cells[idx.metaRemoteUrl].formattedValue : null;
+    String? link1 = (idx.metaLink1 > 0 && cells.length > idx.metaLink1) ? cells[idx.metaLink1].formattedValue : null;
+    String? link2 = (idx.metaLink2 > 0 && cells.length > idx.metaLink2) ? cells[idx.metaLink2].formattedValue : null;
+
+    return Chapter(
+      subjectKey: subjectKey,
+      nameForKey: cells[idx.nameForId].formattedValue!,
+      title: cells[idx.metaTitle].formattedValue!,
+      category: category,
+      remoteUrl: remoteUrl,
+      localUrl: null,
+      link1: link1,
+      link2: link2,
+      lastStudyDate: DateTime.fromMillisecondsSinceEpoch(0),
+      studyPoint: 0,
+      quizCount: 0,
+    );
+  }
+
   static Word getWord(IndexHolder idx, List<CellData> cells, int subjectKey) {
     String? hint = (idx.hint > 0 && cells.length > idx.hint) ? cells[idx.hint].formattedValue : null;
     String? note = (idx.note > 0 && cells.length > idx.note) ? cells[idx.note].formattedValue : null;
@@ -112,6 +135,12 @@ class SheetHelper {
     await SubjectRepository().updateSubject(subject);
 
     // TODO: Upsert chapters and words
+    Map<String, Chapter> chapterMap = await ChapterRepository().getChaptersBySubjectKey(subject.key);
+    Map<String, Chapter> newChapterMap = {};
+    Map<String, Chapter> remainedChapterMap = Map.from(chapterMap);
+    List<Word> words = [];
+
+    updateChaptersAndWords(chapterMap, newChapterMap, remainedChapterMap, words, subject, spreadsheet);
 
     return true;
   }
@@ -205,5 +234,51 @@ class SheetHelper {
     subject.imageUrl = image;
 
     return subject;
+  }
+
+  static void updateChaptersAndWords(
+    Map<String, Chapter> chapterMap,
+    Map<String, Chapter> newChapterMap,
+    Map<String, Chapter> remainedChapterMap,
+    List<Word> words,
+    Subject subject,
+    Spreadsheet spreadsheet,
+  ) {
+    for (Sheet sheet in spreadsheet.sheets!) {
+      SheetProperties sheetProperties = sheet.properties!;
+      String sheetTitle = sheetProperties.title!;
+      if (sheetTitle.startsWith('doc_info') || sheetTitle.endsWith('_temp')) {
+        print('skip $sheetTitle sheet');
+        continue;
+      }
+
+      int frozenRowCount = sheetProperties.gridProperties!.frozenRowCount!;
+      if (frozenRowCount != 2) {
+        print('unexpected frozenRowCount: $frozenRowCount!!!');
+        // TODO: Let user know the error
+      }
+
+      GridData gridData = sheet.data![0]; // We don't query for multi section.
+      IndexHolder indexHolder = IndexHolder();
+
+      List<RowData> rowDataList = gridData.rowData!;
+      Chapter? prevChapter;
+      for (int i = 0; i < rowDataList.length; i++) {
+        List<CellData> cells = rowDataList[i].values!;
+
+        if (i < frozenRowCount) {
+          indexHolder.setColumnIndices(rowDataList[i]);
+        } else if (cells[indexHolder.order].formattedValue == null) {
+          print("order is null. row: $i");
+        } else if (cells[indexHolder.order].formattedValue == "0") {
+          Chapter chapterFromSheet = getChapter(indexHolder, cells, subject.key);
+          print(chapterFromSheet);
+          // TODO: Check previous and remained chapter map
+
+        } else {
+          Word word = SheetHelper.getWord(indexHolder, cells, subject.key);
+        }
+      }
+    }
   }
 }

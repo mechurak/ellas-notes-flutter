@@ -271,8 +271,14 @@ class ChapterRepository {
     }
   }
 
-  Future<void> getChaptersBySubjectKey(int subjectKey) async{
+  Future<Map<String, Chapter>> getChaptersBySubjectKey(int subjectKey) async{
     Box box = Hive.box(chapterBox);
+    Iterable chapters = box.values.where((chapter) => chapter.subjectKey == subjectKey);
+    Map<String, Chapter> retMap = {};
+    for (Chapter chapter in chapters) {
+      retMap[chapter.nameForKey] = chapter;
+    }
+    return retMap;
   }
 
   List<Chapter> getChapters() {

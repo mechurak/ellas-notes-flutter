@@ -54,7 +54,7 @@ class Chapter {
   factory Chapter.fromMap(Map chapter) {
     return Chapter(
       subjectKey: chapter["subjectKey"],
-      nameForKey: chapter["nameForId"],
+      nameForKey: chapter["nameForKey"],
       title: chapter["title"],
       category: chapter["category"],
       remoteUrl: chapter["remoteUrl"],
@@ -70,7 +70,7 @@ class Chapter {
   Map toMap() {
     return {
       "subjectKey": subjectKey,
-      "nameForId": nameForKey,
+      "nameForKey": nameForKey,
       "title": title,
       "category": category,
       "remoteUrl": remoteUrl,
@@ -81,5 +81,10 @@ class Chapter {
       "studyPoint": studyPoint,
       "quizCount": quizCount,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Chapter{subjectKey: $subjectKey, nameForKey: $nameForKey, title: $title}';
   }
 }
