@@ -28,7 +28,7 @@ class _LecturePageState extends State<LecturePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.chapter.nameForId),
+        title: Text(widget.chapter.nameForKey),
       ),
       body: SafeArea(
         child: Container(
@@ -65,7 +65,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _wordList() {
     List words =
-        _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.key)).toList();
+        _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.nameForKey)).toList();
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 16.0),

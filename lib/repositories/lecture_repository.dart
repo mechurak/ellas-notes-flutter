@@ -8,7 +8,7 @@ class LectureRepository {
   final List<Word> _fakeWords = [
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 1,
       quizType: 0,
       text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"## 001: I\u0027m"}',
@@ -18,7 +18,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 2,
       quizType: 0,
       text:
@@ -29,7 +29,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 3,
       quizType: 0,
       text:
@@ -40,7 +40,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 4,
       quizType: 0,
       text:
@@ -51,7 +51,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 11,
       quizType: 0,
       text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"## 002: I\u0027m sorry ( to+동사 / about )"}',
@@ -61,7 +61,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 12,
       quizType: 0,
       text:
@@ -72,7 +72,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 13,
       quizType: 0,
       text:
@@ -83,7 +83,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 14,
       quizType: 0,
       text:
@@ -94,7 +94,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 21,
       quizType: 0,
       text: '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"## 003: I\u0027m sure"}',
@@ -104,7 +104,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 22,
       quizType: 0,
       text:
@@ -115,7 +115,7 @@ class LectureRepository {
     ),
     Word(
       subjectKey: 1,
-      chapterKey: 10,
+      chapterKey: "DAY 01 a",
       order: 23,
       quizType: 0,
       text:

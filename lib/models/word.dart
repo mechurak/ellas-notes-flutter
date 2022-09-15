@@ -8,7 +8,7 @@ class Word {
   int subjectKey;
 
   @HiveField(1)
-  int chapterKey;
+  String chapterKey;
 
   @HiveField(2)
   int order;

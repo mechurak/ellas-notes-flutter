@@ -7,9 +7,8 @@ class ChapterRepository {
 
   final List<Chapter> _fakeChapters = [
     Chapter(
-      key: 0,
       subjectKey: 0,
-      nameForId: "2021-08-09",
+      nameForKey: "2021-08-09",
       title: "616강 모바일 교통",
       category: "Mobile Services (2)",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210809_063000_243250eb_m10.mp4",
@@ -21,9 +20,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 1,
       subjectKey: 0,
-      nameForId: "2021-08-10",
+      nameForKey: "2021-08-10",
       title: "617강 모바일 학습",
       category: "Mobile Services (2)",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210810_063000_73e2e3a9_m10.mp4",
@@ -35,9 +33,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 2,
       subjectKey: 0,
-      nameForId: "2021-08-11",
+      nameForKey: "2021-08-11",
       title: "618강 모바일 음원/영상",
       category: "Mobile Services (2)",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210811_063000_1b8c893e_m10.mp4",
@@ -49,9 +46,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 3,
       subjectKey: 0,
-      nameForId: "2021-08-12",
+      nameForKey: "2021-08-12",
       title: "619강 모바일 지도/네비게이션",
       category: "Mobile Services (2)",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210812_063000_11250f4b_m10.mp4",
@@ -63,9 +59,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 4,
       subjectKey: 0,
-      nameForId: "2021-08-13",
+      nameForKey: "2021-08-13",
       title: "620강 모바일 게임",
       category: "Mobile Services (2)",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210813_063000_c87fbd1c_m10.mp4",
@@ -77,9 +72,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 5,
       subjectKey: 0,
-      nameForId: "2021-08-16",
+      nameForKey: "2021-08-16",
       title: "621강 휴대폰 주변기기",
       category: "Cell Phones",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210816_063000_bd5b1263_m10.mp4",
@@ -91,9 +85,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 6,
       subjectKey: 0,
-      nameForId: "2021-08-17",
+      nameForKey: "2021-08-17",
       title: "622강 휴대폰 케이스",
       category: "Cell Phones",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210817_063000_423c046a_m10.mp4",
@@ -105,9 +98,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 7,
       subjectKey: 0,
-      nameForId: "2021-08-18",
+      nameForKey: "2021-08-18",
       title: "623강 휴대폰 배터리",
       category: "Cell Phones",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210818_063000_af7ce770_m10.mp4",
@@ -119,9 +111,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 8,
       subjectKey: 0,
-      nameForId: "2021-08-19",
+      nameForKey: "2021-08-19",
       title: "624강 휴대폰 고장",
       category: "Cell Phones",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210819_063000_b166cbc6_m10.mp4",
@@ -133,9 +124,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 9,
       subjectKey: 0,
-      nameForId: "2021-08-20",
+      nameForKey: "2021-08-20",
       title: "625강 휴대폰 분실",
       category: "Cell Phones",
       remoteUrl: "https://m4strssl.ebse.co.kr/2021/er2017h0spe01zz/1m/20210820_063000_31436ce8_m10.mp4",
@@ -147,9 +137,8 @@ class ChapterRepository {
       quizCount: 3,
     ),
     Chapter(
-      key: 10,
       subjectKey: 1,
-      nameForId: "DAY 01 a",
+      nameForKey: "DAY 01 a",
       title: "1. I'm",
       category: "Day 1",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1sYqITi1gLCpeqDiLlwOELyGA0xQIeq1l",
@@ -161,9 +150,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 11,
       subjectKey: 1,
-      nameForId: "DAY 01 b",
+      nameForKey: "DAY 01 b",
       title: "1. I'm sorry to disturb you.",
       category: "Day 1",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1KoXZTIsHDvswOrvqkp3zO77IqKr35J5_",
@@ -175,9 +163,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 12,
       subjectKey: 1,
-      nameForId: "DAY 02 a",
+      nameForKey: "DAY 02 a",
       title: "2. It's",
       category: "Day 2",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1RWTqAibsLgBRmdNhb2CqtNgW1tZKNB5t",
@@ -189,9 +176,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 13,
       subjectKey: 1,
-      nameForId: "DAY 02 b",
+      nameForKey: "DAY 02 b",
       title: "2. It's nice to meet you.",
       category: "Day 2",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1CNmP0riHfbbZCs3i8SlDNk2SicFCA9M7",
@@ -203,9 +189,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 14,
       subjectKey: 1,
-      nameForId: "DAY 03 a",
+      nameForKey: "DAY 03 a",
       title: "3. Do you",
       category: "Day 3",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1Feoa4LKwqK27xFZNQqPBHrRqb2ZZYXRL",
@@ -217,9 +202,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 15,
       subjectKey: 1,
-      nameForId: "DAY 03 b",
+      nameForKey: "DAY 03 b",
       title: "3. Do you have a minute?",
       category: "Day 3",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1bSasGD5JFwYkF8-1hGCRQUqOgmtHY7ty",
@@ -231,9 +215,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 16,
       subjectKey: 1,
-      nameForId: "DAY 04 a",
+      nameForKey: "DAY 04 a",
       title: "4. I'll",
       category: "Day 4",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1DQuNT2b_qXmuLIGg-oNAcNYbo0XStS6H",
@@ -245,9 +228,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 17,
       subjectKey: 1,
-      nameForId: "DAY 04 b",
+      nameForKey: "DAY 04 b",
       title: "4. I'll take two pieces",
       category: "Day 4",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1weAAJeM17KzyAY5tAohSP8SlWIC8fPlb",
@@ -259,9 +241,8 @@ class ChapterRepository {
       quizCount: 0,
     ),
     Chapter(
-      key: 18,
       subjectKey: 1,
-      nameForId: "DAY 05 a",
+      nameForKey: "DAY 05 a",
       title: "5. That's",
       category: "Day 5",
       remoteUrl: "https://docs.google.com/uc?export=open&id=1FxG1F0lBR8zkMfeLDpmF0LoNfQpTy5Me",
@@ -283,10 +264,8 @@ class ChapterRepository {
       print("openBoxWithPreload(). First time openBox for chapter box");
       Box box = await Hive.openBox(chapterBox);
       for (Chapter chapter in _fakeChapters) {
-        int key = await box.add(chapter);
-        chapter.key = key;
-        box.put(key, chapter);
-        print('- add key: $key, nameForId: ${chapter.nameForId}, title: ${chapter.title}');
+        box.add(chapter);
+        print('- add chapter - nameForId: ${chapter.nameForKey}, title: ${chapter.title}');
       }
       return box;
     }

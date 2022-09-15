@@ -18,7 +18,7 @@ class WordAdapter extends TypeAdapter<Word> {
     };
     return Word(
       subjectKey: fields[0] as int,
-      chapterKey: fields[1] as int,
+      chapterKey: fields[1] as String,
       order: fields[2] as int,
       quizType: fields[3] as int,
       text: fields[4] as String,

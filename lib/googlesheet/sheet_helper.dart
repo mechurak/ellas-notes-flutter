@@ -12,12 +12,13 @@ import '../repositories/subject_repository.dart';
 import '../secrets.dart';
 
 class SheetHelper {
-  static Word getWord(IndexHolder idx, List<CellData> cells, int subjectKey, int chapterKey) {
+  static Word getWord(IndexHolder idx, List<CellData> cells, int subjectKey) {
     String? hint = (idx.hint > 0 && cells.length > idx.hint) ? cells[idx.hint].formattedValue : null;
     String? note = (idx.note > 0 && cells.length > idx.note) ? cells[idx.note].formattedValue : null;
     String? memo = (idx.memo > 0 && cells.length > idx.memo) ? cells[idx.memo].formattedValue : null;
     String? quizTemp = (idx.quiz > 0 && cells.length > idx.quiz) ? cells[idx.quiz].formattedValue : null;
     int quiz = (quizTemp != null) ? int.parse(quizTemp) : 0;
+    String chapterKey = cells[idx.nameForId].formattedValue!;
 
     return Word(
       subjectKey: subjectKey,

@@ -17,48 +17,45 @@ class ChapterAdapter extends TypeAdapter<Chapter> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Chapter(
-      key: fields[0] as int,
-      subjectKey: fields[1] as int,
-      nameForId: fields[2] as String,
-      title: fields[3] as String,
-      category: fields[4] as String?,
-      remoteUrl: fields[5] as String?,
-      localUrl: fields[6] as String?,
-      link1: fields[7] as String?,
-      link2: fields[8] as String?,
-      lastStudyDate: fields[9] as DateTime,
-      studyPoint: fields[10] as int,
-      quizCount: fields[11] as int,
+      subjectKey: fields[0] as int,
+      nameForKey: fields[1] as String,
+      title: fields[2] as String,
+      category: fields[3] as String?,
+      remoteUrl: fields[4] as String?,
+      localUrl: fields[5] as String?,
+      link1: fields[6] as String?,
+      link2: fields[7] as String?,
+      lastStudyDate: fields[8] as DateTime,
+      studyPoint: fields[9] as int,
+      quizCount: fields[10] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Chapter obj) {
     writer
-      ..writeByte(12)
-      ..writeByte(0)
-      ..write(obj.key)
-      ..writeByte(1)
-      ..write(obj.subjectKey)
-      ..writeByte(2)
-      ..write(obj.nameForId)
-      ..writeByte(3)
-      ..write(obj.title)
-      ..writeByte(4)
-      ..write(obj.category)
-      ..writeByte(5)
-      ..write(obj.remoteUrl)
-      ..writeByte(6)
-      ..write(obj.localUrl)
-      ..writeByte(7)
-      ..write(obj.link1)
-      ..writeByte(8)
-      ..write(obj.link2)
-      ..writeByte(9)
-      ..write(obj.lastStudyDate)
-      ..writeByte(10)
-      ..write(obj.studyPoint)
       ..writeByte(11)
+      ..writeByte(0)
+      ..write(obj.subjectKey)
+      ..writeByte(1)
+      ..write(obj.nameForKey)
+      ..writeByte(2)
+      ..write(obj.title)
+      ..writeByte(3)
+      ..write(obj.category)
+      ..writeByte(4)
+      ..write(obj.remoteUrl)
+      ..writeByte(5)
+      ..write(obj.localUrl)
+      ..writeByte(6)
+      ..write(obj.link1)
+      ..writeByte(7)
+      ..write(obj.link2)
+      ..writeByte(8)
+      ..write(obj.lastStudyDate)
+      ..writeByte(9)
+      ..write(obj.studyPoint)
+      ..writeByte(10)
       ..write(obj.quizCount);
   }
 
