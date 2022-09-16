@@ -1,4 +1,6 @@
+import 'package:ellas_notes_flutter/googlesheet/sheet_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/chapter.dart';
@@ -17,7 +19,7 @@ class ChapterPage extends StatefulWidget {
 
 class _ChapterPageState extends State<ChapterPage> {
   late double _deviceHeight, _deviceWidth;
-  Box? _box;
+  List<Chapter>? chapters;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,22 @@ class _ChapterPageState extends State<ChapterPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.subject.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () async {
+              EasyLoading.instance.maskType = EasyLoadingMaskType.black;
+              EasyLoading.show(status: 'loading...');
+              await SheetHelper.fetchSpreadsheet(widget.subject.sheetId);
+              setState(() {});
+              EasyLoading.dismiss();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SafeArea(
         child: Container(
@@ -46,10 +64,10 @@ class _ChapterPageState extends State<ChapterPage> {
 
   Widget _chapterView() {
     return FutureBuilder(
-      future: ChapterRepository().openBoxWithPreload(),
+      future: ChapterRepository().getChapterListBySubjectKey(widget.subject.key),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          _box = snapshot.data;
+          chapters = snapshot.data;
           return _chapterList();
         } else {
           return const Center(
@@ -61,13 +79,12 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Widget _chapterList() {
-    List chapters = _box!.values.where((chapter) => chapter.subjectKey == widget.subject.key).toList();
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.all(16.0),
-        itemCount: chapters.length,
+        itemCount: chapters!.length,
         itemBuilder: (BuildContext context, int index) {
-          return _chapterTile(chapters[index]);
+          return _chapterTile(chapters![index]);
         },
         separatorBuilder: (BuildContext context, int index) {
           return const Divider();

@@ -319,6 +319,14 @@ class ChapterRepository {
     box.addAll(chapters);
   }
 
+  Future<List<Chapter>> getChapterListBySubjectKey(int subjectKey) async {
+    Box box = (await openBoxWithPreload())!;
+    List chapters = box.values.where((chapter) => chapter.subjectKey == subjectKey).toList();
+    List<Chapter> retList = List.from(chapters);
+    retList.sort((b, a) => a.nameForKey.compareTo(b.nameForKey));  // DESC
+    return retList;
+  }
+
   List<Chapter> getChapters() {
     return _fakeChapters;
   }

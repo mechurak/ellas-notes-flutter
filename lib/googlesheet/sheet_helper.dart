@@ -122,8 +122,12 @@ class SheetHelper {
   }
 
   static Future<bool> fetchSpreadsheet(String spreadsheetId) async {
+    print('fetchSpreadsheet(). sheetId: $spreadsheetId');
     final Spreadsheet spreadsheet = await getSpreadsheet(spreadsheetId);
+    print('spreadsheet: $spreadsheet');
     String title = spreadsheet.properties!.title!;
+    print('title: $title');
+    await LectureRepository().openBoxWithPreload();
 
     // Check 'doc_info' sheet and upsert subject
     Sheet? docInfoSheet = getDocInfoSheet(spreadsheet);
@@ -150,6 +154,7 @@ class SheetHelper {
     var client = clientViaApiKey(googleApiKey);
 
     const fields = [
+      'properties',
       'sheets.properties',
       'sheets.data.rowData.values.formattedValue',
       'sheets.data.rowData.values.textFormatRuns',
@@ -174,10 +179,9 @@ class SheetHelper {
   }
 
   static Future<Subject> _createOrGetSubject(String title, String spreadsheetId) async {
-    Box subjectBox = (await SubjectRepository().openBoxWithPreload())!;
-
-    if (subjectBox.values.where((subject) => subject.sheetId == spreadsheetId).isNotEmpty) {
-      return subjectBox.get(spreadsheetId);
+    Subject? prevSubject = await SubjectRepository().getSubjectBySheetId(spreadsheetId);
+    if (prevSubject != null) {
+      return prevSubject;
     } else {
       print('new sheetId!. create subject for $title');
       return Subject(

@@ -64,6 +64,16 @@ class SubjectRepository {
     }
   }
 
+  Future<Subject?> getSubjectBySheetId(String sheetId) async {
+    Box box = Hive.box(subjectBox);
+    Iterable<dynamic> subjects = box.values.where((subject) => subject.sheetId == sheetId);
+    if (subjects.isNotEmpty) {
+      // TODO: Check multiple case
+      return subjects.first as Subject;
+    }
+    return null;
+  }
+
   List<Subject> getSubjects() {
     return _initialSubjects + _initialSubjects + _initialSubjects;
   }

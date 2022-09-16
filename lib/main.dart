@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -29,7 +30,7 @@ void main() async {
   // );
   await loadConfig();
   registerHttpService();
-  await Hive.initFlutter("hive_boxes");  // Hive 파일들 저장할 경로 지정
+  await Hive.initFlutter("hive_boxes"); // Hive 파일들 저장할 경로 지정
   Hive.registerAdapter(SubjectAdapter()); // add here
   Hive.registerAdapter(ChapterAdapter());
   Hive.registerAdapter(WordAdapter());
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         "home": (context) => HomePage(),
         "game": (context) => GamePage(),
       },
+      builder: EasyLoading.init(),
     );
   }
 }
