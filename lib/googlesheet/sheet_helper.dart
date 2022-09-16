@@ -4,7 +4,6 @@ import 'package:ellas_notes_flutter/repositories/lecture_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/chapter.dart';
 import '../models/subject.dart';
@@ -127,6 +126,7 @@ class SheetHelper {
     print('spreadsheet: $spreadsheet');
     String title = spreadsheet.properties!.title!;
     print('title: $title');
+    await ChapterRepository().openBoxWithPreload();
     await LectureRepository().openBoxWithPreload();
 
     // Check 'doc_info' sheet and upsert subject

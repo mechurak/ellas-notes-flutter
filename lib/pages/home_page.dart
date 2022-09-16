@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../googlesheet/sheet_helper.dart';
 import '../models/subject.dart';
 import '../repositories/subject_repository.dart';
 import 'chapter_page.dart';
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late double _deviceHeight, _deviceWidth;
   Box? _box;
+  String? _newSheetId;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: _displayAddPopup,
         child: const Icon(Icons.add),
       ),
     );
@@ -109,7 +112,7 @@ class _HomePageState extends State<HomePage> {
         width: 75,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(subject.imageUrl!),  // TODO: Consider null case
+            image: NetworkImage(subject.imageUrl!), // TODO: Consider null case
             fit: BoxFit.cover,
           ),
           borderRadius: const BorderRadius.all(
@@ -117,7 +120,38 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      subtitle: Text(subject.description!),  // TODO: Consider null case
+      subtitle: Text(subject.description!), // TODO: Consider null case
+    );
+  }
+
+  void _displayAddPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext buildContext) {
+        return AlertDialog(
+          title: const Text("Add a new subject"),
+          content: TextField(
+            onSubmitted: (value) async {
+              if (_newSheetId != null) {
+                EasyLoading.instance.maskType = EasyLoadingMaskType.black;
+                EasyLoading.show(status: 'loading...');
+                await SheetHelper.fetchSpreadsheet(_newSheetId!);
+                setState(() {
+                  _newSheetId = null;
+                  Navigator.pop(context);
+                });
+                EasyLoading.dismiss();
+              }
+            },
+            decoration: const InputDecoration(hintText: "sheetId..."),
+            onChanged: (value) {
+              setState(() {
+                _newSheetId = value;
+              });
+            },
+          ),
+        );
+      },
     );
   }
 }
