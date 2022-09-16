@@ -1,11 +1,11 @@
 import 'package:ellas_notes_flutter/googlesheet/sheet_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/chapter.dart';
 import '../models/subject.dart';
 import '../repositories/chapter_repository.dart';
+import '../utils/date_util.dart';
 import 'lecture_page.dart';
 
 class ChapterPage extends StatefulWidget {
@@ -94,7 +94,9 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Widget _chapterTile(Chapter chapter) {
-    return ListTile(
+    String lastStudy = DateUtil.getLastStudyDateStr(chapter.lastStudyDate);
+
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -107,8 +109,24 @@ class _ChapterPageState extends State<ChapterPage> {
           ),
         );
       },
-      title: Text(chapter.title),
-      subtitle: Text(chapter.lastStudyDate.toString()),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(chapter.nameForKey),
+                const SizedBox(width: 16),
+                Flexible(child: Text(lastStudy)),
+              ],
+            ),
+            Text(chapter.title, style: const TextStyle(fontSize: 16)),
+            chapter.category != null ? Text(chapter.category!) : const Text(''),
+          ],
+        ),
+      ),
     );
   }
 }
