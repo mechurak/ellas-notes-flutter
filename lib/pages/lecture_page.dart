@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../googlesheet/sheet_helper.dart';
 import '../models/chapter.dart';
-import '../models/word.dart';
 import '../repositories/lecture_repository.dart';
+import '../widgets/word_tile.dart';
 
 class LecturePage extends StatefulWidget {
   final Chapter chapter;
@@ -65,64 +62,18 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _wordList() {
     List words =
-        _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.nameForKey)).toList();
+    _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.nameForKey)).toList();
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         itemCount: words.length,
         itemBuilder: (BuildContext context, int index) {
-          return _wordTile(words[index]);
+          return WordTile(word: words[index]);
         },
         separatorBuilder: (BuildContext context, int index) {
           return const Divider();
         },
       ),
-    );
-  }
-
-  Widget _wordTile(Word word) {
-    List<Widget> children = [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: SheetHelper.getRichText(word.text),
-      )
-    ];
-    if (word.hint != null) {
-      children.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(word.hint!, style: const TextStyle(fontStyle: FontStyle.italic)),
-        ),
-      );
-    }
-    if (word.note != null) {
-      children.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(word.note!, style: const TextStyle(fontSize: 12)),
-        ),
-      );
-    }
-    if (word.memo != null) {
-      children.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(word.memo!, style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
-        ),
-      );
-    }
-
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4), //const EdgeInsets.symmetric(vertical: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: children,
-          ),
-        ),
-        Text(word.order.toString(), style: const TextStyle(fontSize: 12, fontFeatures: [FontFeature.superscripts()])),
-      ],
     );
   }
 }

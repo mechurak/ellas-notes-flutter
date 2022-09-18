@@ -121,8 +121,8 @@ class LectureRepository {
       text:
           '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I\u0027m sure / we can win first prize.","textFormatRuns":[{"format":{"italic":true}},{"format":{},"startIndex":8},{"format":{"bold":true},"startIndex":11},{"format":{"bold":true,"italic":true},"startIndex":18},{"format":{"bold":true},"startIndex":21},{"format":{},"startIndex":33}]}',
       hint: '나는 확신해요 / 우리가 1등 상을 탈 수 있을 거라고.',
-      note: null,
-      memo: null,
+      note: 'delay /dɪˈleɪ/ 지연, 연기',
+      memo: '/dɪˈleɪ/. test memo. this is long test memo.\n with new line character.',
     ),
   ];
 
