@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:ellas_notes_flutter/repositories/lecture_repository.dart';
-import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 
@@ -53,70 +52,6 @@ class SheetHelper {
       hint: hint,
       note: note,
       memo: memo,
-    );
-  }
-
-  static RichText getRichText(String text) {
-    CellData cellData = CellData.fromJson(jsonDecode(text));
-
-    String tempStr = cellData.formattedValue!;
-    List<TextSpan> children = [];
-
-    if (tempStr.startsWith('##')) {
-      TextSpan span = TextSpan(
-        text: tempStr,
-        style: const TextStyle(
-          color: Colors.orange,
-        ),
-      );
-      children.add(span);
-
-      return RichText(
-        text: TextSpan(
-          text: '',
-          children: children,
-        ),
-      );
-    }
-
-    if (cellData.textFormatRuns != null) {
-      TextFormatRun curItem = cellData.textFormatRuns![0];
-      curItem.startIndex = 0;
-
-      for (int i = 1; i < cellData.textFormatRuns!.length; i++) {
-        TextFormatRun nextItem = cellData.textFormatRuns![i];
-        children.add(_getTextSpan(tempStr, curItem, nextItem));
-        curItem = nextItem;
-      }
-      children.add(_getTextSpan(tempStr, curItem, null)); // last item
-    } else {
-      TextSpan span = TextSpan(
-        text: tempStr,
-        style: const TextStyle(
-          color: Colors.black,
-        ),
-      );
-      children.add(span);
-    }
-
-    return RichText(
-      text: TextSpan(
-        text: '',
-        children: children,
-      ),
-    );
-  }
-
-  static TextSpan _getTextSpan(String wholeText, TextFormatRun curItem, TextFormatRun? nextItem) {
-    int? prevEndIndex = nextItem?.startIndex;
-    var bgColor = curItem.format?.underline == true ? Colors.yellow : null;
-    var color = curItem.format?.italic == true ? Colors.purple : Colors.black;
-    return TextSpan(
-      text: wholeText.substring(curItem.startIndex!, prevEndIndex),
-      style: TextStyle(
-        color: color,
-        backgroundColor: bgColor,
-      ),
     );
   }
 

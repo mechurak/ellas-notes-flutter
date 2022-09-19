@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../googlesheet/sheet_helper.dart';
 import '../models/word.dart';
 import '../repositories/lecture_repository.dart';
 import '../theme/text_styles.dart';
+import 'main_text.dart';
 
 class WordTile extends StatefulWidget {
   final Word word;
@@ -26,7 +26,7 @@ class _WordTileState extends State<WordTile> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: SheetHelper.getRichText(widget.word.text),
+                child: MainText(text: widget.word.text),
               ),
               if (widget.word.hint != null)
                 Padding(
@@ -57,7 +57,8 @@ class WordTilePreviewApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Word word = LectureRepository().getWords().last;
+    // Word word = LectureRepository().getWords().last;
+    Word word = LectureRepository().fakeWordWithBold;
 
     return MaterialApp(
       title: "WordTile Preview",

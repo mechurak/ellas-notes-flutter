@@ -124,7 +124,27 @@ class LectureRepository {
       note: 'delay /dɪˈleɪ/ 지연, 연기',
       memo: '/dɪˈleɪ/. test memo. this is long test memo.\n with new line character.',
     ),
+    Word(
+      subjectKey: 1,
+      chapterKey: 'DAY 63 a',
+      order: 23,
+      quizType: 1,
+      text:
+          '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"I feel like everyone likes me.","textFormatRuns":[{"format":{"italic":true}},{"format":{"bold":true,"italic":true},"startIndex":2},{"format":{},"startIndex":11}]}',
+      hint: '모든 사람이 나를 좋아하는 것 같아. (I f___ l___)',
+      note: 'everyone 은 단수 취급',
+      memo: '테스트 메모. 아주 긴 테스트 메모.\n/dɪˈleɪ/. test memo. this is long test memo.\n with new line character.',
+    ),
   ];
+
+  final Word fakeWordWithBold = Word(
+    subjectKey: 1,
+    chapterKey: 'DAY 65 b',
+    order: 51,
+    quizType: 0,
+    text: '{"effectiveFormat":{"textFormat":{"bold":true}},"formattedValue":"A: Did I? I\'m so sorry."}',
+    hint: '그랬나요? 정말 죄송합니다.',
+  );
 
   Future<Box?> openBoxWithPreload() async {
     if (await Hive.boxExists(wordBox)) {
