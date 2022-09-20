@@ -146,6 +146,19 @@ class LectureRepository {
     hint: '그랬나요? 정말 죄송합니다.',
   );
 
+  final Word fakeWordSample = Word(
+    subjectKey: -1,
+    chapterKey: '2021-08-20',
+    order: 4,
+    quizType: 1,
+    text:
+        '{"effectiveFormat":{"textFormat":{"bold":false}},"formattedValue":"My phone seems to be missing.","textFormatRuns":[{"format":{"bold":true}},{"format":{"bold":true,"underline":true},"startIndex":3},{"format":{},"startIndex":8},{"format":{"bold":true},"startIndex":18},{"format":{"bold":true,"underline":true},"startIndex":21},{"format":{"bold":true},"startIndex":25},{"format":{},"startIndex":28}]}',
+    hint: '내 전화기가 없어진 것 같아.',
+    note: null,
+    memo: 'my phone is missing 휴대폰이 없다',
+    link: null,
+  );
+
   Future<Box?> openBoxWithPreload() async {
     if (await Hive.boxExists(wordBox)) {
       print("openBoxWithPreload(). word box exists. do nothing");

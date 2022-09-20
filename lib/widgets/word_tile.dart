@@ -58,7 +58,8 @@ class WordTilePreviewApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Word word = LectureRepository().getWords().last;
-    Word word = LectureRepository().fakeWordWithBold;
+    // Word word = LectureRepository().fakeWordWithBold;
+    Word word = LectureRepository().fakeWordSample;
 
     return MaterialApp(
       title: "WordTile Preview",

@@ -7,7 +7,9 @@ import 'package:ellas_notes_flutter/secrets.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
-const _spreadsheetId = '1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE';
+// const _spreadsheetId = '1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE';  // 강성태 66일 영어회화
+const _spreadsheetId = '1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ';  // 정면돌파 스피킹
+
 const _fields = [
   'sheets.properties',
   'sheets.data.rowData.values.formattedValue',
@@ -24,23 +26,24 @@ void main() async {
   print(ss);
 
   List<Sheet> sheets = ss.sheets!;
-  Sheet? day56Sheet;
+  Sheet? targetSheet;
   for (Sheet sheet in sheets) {
     print(sheet.properties?.title);
-    if ("DAY 56~65" == sheet.properties?.title) {
-      print("Found DAY 56~65");
-      day56Sheet = sheet;
+    // if ("DAY 56~65" == sheet.properties?.title) {
+    if ("2021-08" == sheet.properties?.title) {
+      print("Found ${sheet.properties?.title}");
+      targetSheet = sheet;
     }
   }
 
-  int? frozenRowCount = day56Sheet?.properties?.gridProperties?.frozenRowCount;
+  int? frozenRowCount = targetSheet?.properties?.gridProperties?.frozenRowCount;
   if (frozenRowCount != 2) {
     print("unexpected frozenRowCount: $frozenRowCount");
     return;
   }
 
   IndexHolder indexHolder = IndexHolder();
-  GridData gridData = day56Sheet!.data![0];
+  GridData gridData = targetSheet!.data![0];
   List<RowData> rowDataList = gridData.rowData!;
   for (int i = 0; i < rowDataList.length; i++) {
     List<CellData> cells = rowDataList[i].values!;

@@ -15,6 +15,10 @@ class MainText extends StatefulWidget {
 
 class _MainTextState extends State<MainText> {
   final Set<int> _clickedStartIndices = {};
+  int _prevBoldStart = -1;
+  int _prevUnderlineStart = -1;
+  int _prevItalicStart = -1;
+  int _prevStart = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +47,20 @@ class _MainTextState extends State<MainText> {
     if (cellData.textFormatRuns != null) {
       TextFormatRun curItem = cellData.textFormatRuns![0];
       curItem.startIndex = 0;
+      TextSpan? curTextSpan;
 
       for (int i = 1; i < cellData.textFormatRuns!.length; i++) {
         TextFormatRun nextItem = cellData.textFormatRuns![i];
-        children.add(_getTextSpan(tempStr, curItem, nextItem));
+        curTextSpan = _getTextSpan(tempStr, curItem, nextItem);
+        if (curTextSpan != null) {
+          children.add(curTextSpan);
+        }
         curItem = nextItem;
       }
-      children.add(_getTextSpan(tempStr, curItem, null)); // last item
+      curTextSpan = _getTextSpan(tempStr, curItem, null); // last item
+      if (curTextSpan != null) {
+        children.add(curTextSpan);
+      }
     } else {
       if (cellData.effectiveFormat?.textFormat?.bold == true) {
         children.add(_getWholeBoldSpan(tempStr));
@@ -72,38 +83,67 @@ class _MainTextState extends State<MainText> {
     );
   }
 
-  TextSpan _getTextSpan(String wholeText, TextFormatRun curItem, TextFormatRun? nextItem) {
+  TextSpan? _getTextSpan(String wholeText, TextFormatRun curItem, TextFormatRun? nextItem) {
     int? prevEndIndex = nextItem?.startIndex;
     var text = wholeText.substring(curItem.startIndex!, prevEndIndex);
     var bgColor = curItem.format?.underline == true ? Colors.yellow : null;
     var color = curItem.format?.italic == true ? Colors.purple : Colors.black;
 
-    if (curItem.format?.bold == true) {
-      if (!_clickedStartIndices.contains(curItem.startIndex!)) {
+    bool shouldBeNull = false;
+    bool? hasBold = curItem.format?.bold;
+    if (hasBold == true) {
+      // 1. _ -> (B)
+      // 2. B -> (B)
+      if (_prevBoldStart == -1) {
+        _prevBoldStart = curItem.startIndex!;
+      }
+
+      // 2. (B) -> B : null 리턴 해야 함
+      // 3. (B) -> _ : 요번에 리턴 해야 함
+      if (nextItem?.format?.bold == true) {
+        shouldBeNull = true;
+      }
+    } else {
+      _prevBoldStart = -1;
+    }
+
+    if (_prevBoldStart == -1 || _clickedStartIndices.contains(_prevBoldStart)) {
+      return TextSpan(
+        text: text,
+        style: TextStyle(
+          color: color,
+          backgroundColor: bgColor,
+        ),
+      );
+    } else {
+      // Hide
+      if (shouldBeNull) {
+        return null;
+      } else {
+        var tapRecognizer = TapGestureRecognizer();
+        int startIndex = _prevBoldStart;
+        tapRecognizer.onTap = () {
+          print('onTap $startIndex');
+          setState(() {
+            if (_clickedStartIndices.contains(startIndex)) {
+              _clickedStartIndices.remove(startIndex);
+            } else {
+              _clickedStartIndices.add(startIndex);
+            }
+          });
+        };
         bgColor = Colors.blue;
         color = Colors.blue;
+        return TextSpan(
+          text: wholeText.substring(startIndex, prevEndIndex),
+          style: TextStyle(
+            color: color,
+            backgroundColor: bgColor,
+          ),
+          recognizer: tapRecognizer,
+        );
       }
     }
-    var tapRecognizer = TapGestureRecognizer();
-    tapRecognizer.onTap = () {
-      print('onTap $text');
-      setState(() {
-        if (_clickedStartIndices.contains(curItem.startIndex!)) {
-          _clickedStartIndices.remove(curItem.startIndex!);
-        } else {
-          _clickedStartIndices.add(curItem.startIndex!);
-        }
-      });
-    };
-    var recognizer = curItem.format?.bold == true ? tapRecognizer : null;
-    return TextSpan(
-      text: wholeText.substring(curItem.startIndex!, prevEndIndex),
-      style: TextStyle(
-        color: color,
-        backgroundColor: bgColor,
-      ),
-      recognizer: recognizer,
-    );
   }
 
   TextSpan _getWholeBoldSpan(String text) {
