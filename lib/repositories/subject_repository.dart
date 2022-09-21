@@ -33,6 +33,15 @@ class SubjectRepository {
       link: "https://home.ebs.co.kr/listene/main",
       imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/697/x3904000048697.jpg",
     ),
+    Subject(
+      key: 3,
+      sheetId: "11BUANox4QzWGo0ZAzgUg1BeZ6JKISp1CunHJyBJQrsU",
+      title: "강성태 영단어 어원편",
+      lastUpdate: DateTime.now(),
+      description: "암기하지 않아도 암기되는 공신들의 영단어 공부 비법",
+      link: "https://gongsin.com/courses/intro/w/show?cate=%EC%98%81%EB%8B%A8%EC%96%B4",
+      imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/884/x9788974572884.jpg",
+    ),
   ];
 
   Future<Box?> openBoxWithPreload() async {

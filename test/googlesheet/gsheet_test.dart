@@ -8,7 +8,8 @@ import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
 // const _spreadsheetId = '1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE';  // 강성태 66일 영어회화
-const _spreadsheetId = '1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ';  // 정면돌파 스피킹
+// const _spreadsheetId = '1veQzV0fyYHO_4Lu2l33ZRXbjy47_q8EI1nwVAQXJcVQ';  // 정면돌파 스피킹
+const _spreadsheetId = '11BUANox4QzWGo0ZAzgUg1BeZ6JKISp1CunHJyBJQrsU';  // 강성태 영단어
 
 const _fields = [
   'sheets.properties',
@@ -29,8 +30,9 @@ void main() async {
   Sheet? targetSheet;
   for (Sheet sheet in sheets) {
     print(sheet.properties?.title);
-    // if ("DAY 56~65" == sheet.properties?.title) {
-    if ("2021-08" == sheet.properties?.title) {
+    // if ("DAY 56~65" == sheet.properties?.title) {  // 강성태 66일 영어회화
+    // if ("2021-08" == sheet.properties?.title) {  // 정면돌파 스피킹
+    if ("DAY 1~10" == sheet.properties?.title) {  // 강성태 영단어
       print("Found ${sheet.properties?.title}");
       targetSheet = sheet;
     }
