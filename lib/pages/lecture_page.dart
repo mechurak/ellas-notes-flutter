@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/chapter.dart';
 import '../repositories/lecture_repository.dart';
+import '../widgets/my_player.dart';
 import '../widgets/word_tile.dart';
 
 class LecturePage extends StatefulWidget {
@@ -35,6 +36,7 @@ class _LecturePageState extends State<LecturePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                widget.chapter.remoteUrl != null ? MyPlayer(url: widget.chapter.remoteUrl!) : const Text('no media'),
                 _wordView(),
               ],
             ),
@@ -62,7 +64,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _wordList() {
     List words =
-    _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.nameForKey)).toList();
+        _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.nameForKey)).toList();
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
