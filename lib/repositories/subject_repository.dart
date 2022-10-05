@@ -42,6 +42,15 @@ class SubjectRepository {
       link: "https://gongsin.com/courses/intro/w/show?cate=%EC%98%81%EB%8B%A8%EC%96%B4",
       imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/884/x9788974572884.jpg",
     ),
+    Subject(
+      key: 4,
+      sheetId: "1mh1Kr6fav5c719bJrSA0-nlkVLZeBOKxzDYMzhh5LRg",
+      title: "딱 이만큼 영어회화",
+      lastUpdate: DateTime.now(),
+      description: "딱 3개월 만에 영어 프리토킹! 딱 이만큼 영어회화, 딱영어",
+      link: "https://class101.net/plus/ko/products/5f3ddef9e6c171001dc3d074",
+      imageUrl: "https://image.kyobobook.co.kr/images/book/xlarge/141/x9791130631141.jpg",
+    ),
   ];
 
   Future<Box?> openBoxWithPreload() async {
