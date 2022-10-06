@@ -67,7 +67,6 @@ class _LecturePageState extends State<LecturePage> {
         _box!.values.where((word) => (word.subjectKey == widget.chapter.subjectKey) && (word.chapterKey == widget.chapter.nameForKey)).toList();
     return Expanded(
       child: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
         itemCount: words.length,
         itemBuilder: (BuildContext context, int index) {
           return WordTile(word: words[index]);
