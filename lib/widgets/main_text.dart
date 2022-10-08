@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 
+import '../googlesheet/text_style_codec.dart';
+
 class MainText extends StatefulWidget {
   final String text;
 
@@ -15,14 +17,31 @@ class MainText extends StatefulWidget {
 
 class _MainTextState extends State<MainText> {
   final Set<int> _clickedStartIndices = {};
-  int _prevBoldStart = -1;
-  int _prevUnderlineStart = -1;
-  int _prevItalicStart = -1;
-  int _prevStart = 0;
 
   @override
   Widget build(BuildContext context) {
     CellData cellData = CellData.fromJson(jsonDecode(widget.text));
+    List<int> codes = TextStyleCodec.getStyleCodeList(cellData);
+
+    // Annotate Hide section and remove HIDE mask
+    Map<int, int> hideSectionMap = {}; // <startIndex, endIndex>
+    int prevHideStart = -1;
+    for (int i = 0; i < codes.length; i++) {
+      if (codes[i] & TextStyleCodec.codeHide == TextStyleCodec.codeHide) {
+        if (prevHideStart == -1) {
+          prevHideStart = i;
+        }
+        codes[i] -= TextStyleCodec.codeHide;
+      } else {
+        if (prevHideStart != -1) {
+          hideSectionMap[prevHideStart] = i;
+          prevHideStart = -1;
+        }
+      }
+    }
+    if (prevHideStart != -1) {
+      hideSectionMap[prevHideStart] = codes.length;
+    }
 
     String tempStr = cellData.formattedValue!;
     List<TextSpan> children = [];
@@ -44,86 +63,19 @@ class _MainTextState extends State<MainText> {
       );
     }
 
-    if (cellData.textFormatRuns != null) {
-      TextFormatRun curItem = cellData.textFormatRuns![0];
-      curItem.startIndex = 0;
-      TextSpan? curTextSpan;
-
-      for (int i = 1; i < cellData.textFormatRuns!.length; i++) {
-        TextFormatRun nextItem = cellData.textFormatRuns![i];
-        curTextSpan = _getTextSpan(tempStr, curItem, nextItem);
-        if (curTextSpan != null) {
-          children.add(curTextSpan);
-        }
-        curItem = nextItem;
-      }
-      curTextSpan = _getTextSpan(tempStr, curItem, null); // last item
-      if (curTextSpan != null) {
-        children.add(curTextSpan);
-      }
-    } else {
-      if (cellData.effectiveFormat?.textFormat?.bold == true) {
-        children.add(_getWholeBoldSpan(tempStr));
-      } else {
-        TextSpan span = TextSpan(
-          text: tempStr,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
-        );
-        children.add(span);
-      }
-    }
-
-    return RichText(
-      text: TextSpan(
-        text: '',
-        children: children,
-      ),
-    );
-  }
-
-  TextSpan? _getTextSpan(String wholeText, TextFormatRun curItem, TextFormatRun? nextItem) {
-    int? prevEndIndex = nextItem?.startIndex;
-    var text = wholeText.substring(curItem.startIndex!, prevEndIndex);
-    var bgColor = curItem.format?.underline == true ? Colors.yellow : null;
-    var color = curItem.format?.italic == true ? Colors.purple : Colors.black;
-
-    bool shouldBeNull = false;
-    bool? hasBold = curItem.format?.bold;
-    if (hasBold == true) {
-      // 1. _ -> (B)
-      // 2. B -> (B)
-      if (_prevBoldStart == -1) {
-        _prevBoldStart = curItem.startIndex!;
-      }
-
-      // 2. (B) -> B : null 리턴 해야 함
-      // 3. (B) -> _ : 요번에 리턴 해야 함
-      if (nextItem?.format?.bold == true) {
-        shouldBeNull = true;
-      }
-    } else {
-      _prevBoldStart = -1;
-    }
-
-    if (_prevBoldStart == -1 || _clickedStartIndices.contains(_prevBoldStart)) {
-      return TextSpan(
-        text: text,
-        style: TextStyle(
-          color: color,
-          backgroundColor: bgColor,
-        ),
-      );
-    } else {
-      // Hide
-      if (shouldBeNull) {
-        return null;
-      } else {
-        var tapRecognizer = TapGestureRecognizer();
-        int startIndex = _prevBoldStart;
+    int start = 0;
+    int end = 0;
+    while (end < tempStr.length) {
+      bool shouldHide = hideSectionMap.containsKey(start) && !_clickedStartIndices.contains(start);
+      if (shouldHide) {
+        end = hideSectionMap[start]!;
+        var text = tempStr.substring(start, end);
+        var bgColor = Colors.blue;
+        var color = Colors.blue;
+        TapGestureRecognizer? tapRecognizer;
+        tapRecognizer = TapGestureRecognizer();
+        int startIndex = start;
         tapRecognizer.onTap = () {
-          print('onTap $startIndex');
           setState(() {
             if (_clickedStartIndices.contains(startIndex)) {
               _clickedStartIndices.remove(startIndex);
@@ -132,45 +84,45 @@ class _MainTextState extends State<MainText> {
             }
           });
         };
-        bgColor = Colors.blue;
-        color = Colors.blue;
-        return TextSpan(
-          text: wholeText.substring(startIndex, prevEndIndex),
-          style: TextStyle(
-            color: color,
-            backgroundColor: bgColor,
+        children.add(
+          TextSpan(
+            text: text,
+            style: TextStyle(
+              color: color,
+              backgroundColor: bgColor,
+            ),
+            recognizer: tapRecognizer,
           ),
-          recognizer: tapRecognizer,
         );
+        start = end;
+      } else {
+        while (end < tempStr.length && codes[start] == codes[end]) {
+          if (hideSectionMap.containsKey(end) && !_clickedStartIndices.contains(end)) break;
+          end++;
+        }
+
+        var text = tempStr.substring(start, end);
+        var bgColor = codes[start] & TextStyleCodec.codeAccent == TextStyleCodec.codeAccent ? Colors.yellow : null;
+        var color = codes[start] & TextStyleCodec.codeImportant == TextStyleCodec.codeImportant ? Colors.purple : Colors.black;
+
+        children.add(
+          TextSpan(
+            text: text,
+            style: TextStyle(
+              color: color,
+              backgroundColor: bgColor,
+            ),
+          ),
+        );
+        start = end;
       }
     }
-  }
 
-  TextSpan _getWholeBoldSpan(String text) {
-    var bgColor;
-    var color = Colors.black;
-    if (!_clickedStartIndices.contains(0)) {
-      bgColor = Colors.blue;
-      color = Colors.blue;
-    }
-    var tapRecognizer = TapGestureRecognizer();
-    tapRecognizer.onTap = () {
-      print('onTap $text');
-      setState(() {
-        if (_clickedStartIndices.contains(0)) {
-          _clickedStartIndices.remove(0);
-        } else {
-          _clickedStartIndices.add(0);
-        }
-      });
-    };
-    return TextSpan(
-      text: text,
-      style: TextStyle(
-        color: color,
-        backgroundColor: bgColor,
+    return RichText(
+      text: TextSpan(
+        text: '',
+        children: children,
       ),
-      recognizer: tapRecognizer,
     );
   }
 }
