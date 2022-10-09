@@ -104,6 +104,9 @@ class _MainTextState extends State<MainText> {
         var text = tempStr.substring(start, end);
         var bgColor = codes[start] & TextStyleCodec.codeAccent == TextStyleCodec.codeAccent ? Colors.yellow : null;
         var color = codes[start] & TextStyleCodec.codeImportant == TextStyleCodec.codeImportant ? Colors.purple : Colors.black;
+        if (codes[start] & TextStyleCodec.codeSpeaker == TextStyleCodec.codeSpeaker) {
+          color = Colors.orange;
+        }
 
         children.add(
           TextSpan(

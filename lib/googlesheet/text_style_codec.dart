@@ -6,6 +6,7 @@ class TextStyleCodec {
   static const codeImportant = 4;  // italic
   static const codeSpace = 8;  // white space
   static const codeSymbol = 16;  // ?!.
+  static const codeSpeaker = 32;  // "^.*: ", ex. "John: "
 
 
   static List<int> getStyleCodeList(CellData cellData) {
@@ -42,6 +43,13 @@ class TextStyleCodec {
 
       for (int j = curItem.startIndex!; j < plainText.length; j++ ) {
         retList[j] = code;
+      }
+    }
+
+    int speakerColonIndex = plainText.indexOf((':'));  // ex. "John: "
+    if (speakerColonIndex != -1 && speakerColonIndex < 10) {
+      for (int i = 0; i < speakerColonIndex + 1; i++ ) {
+        retList[i] += codeSpeaker;
       }
     }
 
