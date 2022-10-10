@@ -59,6 +59,7 @@ class _MainTextState extends State<MainText> {
         text: TextSpan(
           text: '',
           children: children,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       );
     }
@@ -125,6 +126,7 @@ class _MainTextState extends State<MainText> {
       text: TextSpan(
         text: '',
         children: children,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     );
   }

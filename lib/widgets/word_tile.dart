@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/word.dart';
 import '../repositories/lecture_repository.dart';
-import '../theme/text_styles.dart';
+import '../themes/custom_text_style.dart';
 import 'main_text.dart';
 
 class WordTile extends StatefulWidget {
@@ -41,17 +41,17 @@ class _WordTileState extends State<WordTile> {
                 if (widget.word.hint != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(widget.word.hint!, style: TextStyles.hintTextStyle),
+                    child: Text(widget.word.hint!, style: CustomTextStyle.hint(context)),
                   ),
                 if (widget.word.note != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(widget.word.note!, style: TextStyles.noteTextStyle),
+                    child: Text(widget.word.note!, style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 if (widget.word.memo != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(widget.word.memo!, style: TextStyles.memoTextStyle),
+                    child: Text(widget.word.memo!, style: Theme.of(context).textTheme.bodySmall),
                   )
               ],
             ),

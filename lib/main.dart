@@ -20,6 +20,7 @@ import 'pages/home_page.dart';
 import 'pages/lecture_page.dart';
 import 'services/firebase_service.dart';
 import 'services/http_service.dart';
+import 'themes/ellas_notes_theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,9 +61,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Ella's Notes",
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+      theme: EllasNotesThemeData.lightThemeData,
       initialRoute: 'home',
       routes: {
         "home": (context) => HomePage(),
