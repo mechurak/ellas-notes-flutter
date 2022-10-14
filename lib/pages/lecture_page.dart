@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/chapter.dart';
+import '../repositories/chapter_repository.dart';
 import '../repositories/lecture_repository.dart';
 import '../widgets/my_player.dart';
 import '../widgets/word_tile.dart';
@@ -18,6 +19,17 @@ class LecturePage extends StatefulWidget {
 class _LecturePageState extends State<LecturePage> {
   late double _deviceHeight, _deviceWidth;
   Box? _box;
+
+  @override
+  void initState() {
+    super.initState();
+    updateStudyDate(widget.chapter);
+  }
+
+  Future<void> updateStudyDate(Chapter chapter) async {
+    chapter.lastStudyDate = DateTime.now();
+    await ChapterRepository().updateChapter(chapter);
+  }
 
   @override
   Widget build(BuildContext context) {

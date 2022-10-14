@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ellas_notes_flutter/googlesheet/sheet_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,6 +22,10 @@ class ChapterPage extends StatefulWidget {
 class _ChapterPageState extends State<ChapterPage> {
   late double _deviceHeight, _deviceWidth;
   List<Chapter>? chapters;
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +85,19 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Widget _chapterList() {
+    Chapter recentChapter = chapters!.first;
+    for (Chapter chapter in chapters!) {
+      if (chapter.lastStudyDate.compareTo(recentChapter.lastStudyDate) == 1) {
+        recentChapter = chapter;
+      }
+    }
+
     return Expanded(
       child: ListView.separated(
         padding: const EdgeInsets.all(16.0),
         itemCount: chapters!.length,
         itemBuilder: (BuildContext context, int index) {
-          return _chapterTile(chapters![index]);
+          return _chapterTile(chapters![index], chapters![index] == recentChapter);
         },
         separatorBuilder: (BuildContext context, int index) {
           return const Divider();
@@ -93,7 +106,7 @@ class _ChapterPageState extends State<ChapterPage> {
     );
   }
 
-  Widget _chapterTile(Chapter chapter) {
+  Widget _chapterTile(Chapter chapter, bool isFocused) {
     String lastStudy = DateUtil.getLastStudyDateStr(chapter.lastStudyDate);
 
     return InkWell(
@@ -107,7 +120,7 @@ class _ChapterPageState extends State<ChapterPage> {
               );
             },
           ),
-        );
+        ).then(onGoBack);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
@@ -119,7 +132,12 @@ class _ChapterPageState extends State<ChapterPage> {
               children: [
                 Text(chapter.nameForKey),
                 const SizedBox(width: 16),
-                Flexible(child: Text(lastStudy)),
+                Flexible(
+                  child: Text(
+                    lastStudy,
+                    style: isFocused ? const TextStyle(color: Colors.red, fontStyle: FontStyle.italic) : null,
+                  ),
+                ),
               ],
             ),
             Text(chapter.title, style: const TextStyle(fontSize: 16)),

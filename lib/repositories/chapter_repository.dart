@@ -319,11 +319,24 @@ class ChapterRepository {
     box.addAll(chapters);
   }
 
+  Future<void> updateChapter(Chapter chapter) async {
+    Box box = Hive.box(chapterBox);
+    for (var key in box.keys) {
+      var curChapter = box.get(key);
+      if (chapter.nameForKey == curChapter.nameForKey) {
+        print("Update $chapter");
+        box.put(key, chapter);
+        return;
+      }
+    }
+    print("updateChapter(). !!!! failed to update $chapter");
+  }
+
   Future<List<Chapter>> getChapterListBySubjectKey(int subjectKey) async {
     Box box = (await openBoxWithPreload())!;
     List chapters = box.values.where((chapter) => chapter.subjectKey == subjectKey).toList();
     List<Chapter> retList = List.from(chapters);
-    retList.sort((b, a) => a.nameForKey.compareTo(b.nameForKey));  // DESC
+    retList.sort((b, a) => a.nameForKey.compareTo(b.nameForKey)); // DESC
     return retList;
   }
 
