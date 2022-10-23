@@ -40,22 +40,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: Container(
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _subjectView(),
-              ],
-            ),
-          ),
+        child: Column(
+          children: [
+            _subjectView(),
+            _addView(),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _displayAddPopup,
-        child: const Icon(Icons.add),
       ),
     );
   }
@@ -73,6 +63,31 @@ class _HomePageState extends State<HomePage> {
           );
         }
       },
+    );
+  }
+
+  Widget _addView() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          OutlinedButton(
+            onPressed: _displayAddPopup,
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Add Public Sheet"),
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {},
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Add Private Sheet"),
+            ),
+          )
+        ],
+      ),
     );
   }
 
