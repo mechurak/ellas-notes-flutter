@@ -40,11 +40,13 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            _subjectView(),
-            _addView(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _subjectView(),
+              _addView(),
+            ],
+          ),
         ),
       ),
     );
@@ -58,8 +60,9 @@ class _HomePageState extends State<HomePage> {
           _box = snapshot.data;
           return _subjectList();
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return SizedBox(
+            height: _deviceHeight,
+            child: const Center(child: CircularProgressIndicator()),
           );
         }
       },
@@ -94,17 +97,17 @@ class _HomePageState extends State<HomePage> {
   Widget _subjectList() {
     List subjects = _box!.values.toList();
 
-    return Expanded(
-      child: ListView.separated(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: subjects.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _subjectTile(subjects[index]);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
-        },
-      ),
+    return ListView.separated(
+      padding: const EdgeInsets.all(16.0),
+      shrinkWrap: true, // limit height
+      primary: false, // disable scrolling
+      itemCount: subjects.length,
+      itemBuilder: (BuildContext context, int index) {
+        return _subjectTile(subjects[index]);
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider();
+      },
     );
   }
 
