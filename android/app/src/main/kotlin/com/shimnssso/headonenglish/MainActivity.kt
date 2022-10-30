@@ -1,4 +1,4 @@
-package com.shimnsso.ellas_notes_flutter
+package com.shimnssso.headonenglish
 
 import io.flutter.embedding.android.FlutterActivity
 

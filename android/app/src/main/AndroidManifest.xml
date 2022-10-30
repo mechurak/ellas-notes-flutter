@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shimnsso.ellas_notes_flutter">
+    package="com.shimnssso.headonenglish">
    <application
         android:label="ellas_notes_flutter"
         android:name="${applicationName}"
