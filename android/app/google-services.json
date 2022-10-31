@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "112554834425",
+    "project_id": "canhearenglish",
+    "storage_bucket": "canhearenglish.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112554834425:android:9ff92d833cbafb448ba528",
+        "android_client_info": {
+          "package_name": "com.shimnssso.headonenglish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112554834425-pf0f8vjhe7a0kkpi83rj4vduhmooddfn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shimnssso.headonenglish",
+            "certificate_hash": "39ef3780161cc088ef277d2fe26f5b805c0143f5"
+          }
+        },
+        {
+          "client_id": "112554834425-li4bcuslntc34bgq5jo4vqfgjv86avn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFW-RJeiBPhwd2n2aBToREV367lCof7CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "112554834425-li4bcuslntc34bgq5jo4vqfgjv86avn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
