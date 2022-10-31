@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../googlesheet/sheet_helper.dart';
@@ -45,6 +47,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               _subjectView(),
               _addView(),
+              _bottomView(),
             ],
           ),
         ),
@@ -83,7 +86,25 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           OutlinedButton(
-            onPressed: () {},
+            onPressed: () async {
+              // Trigger the authentication flow
+              final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+              print(googleUser);
+
+              // Obtain the auth details from the request
+              final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+              // Create a new credential
+              final credential = GoogleAuthProvider.credential(
+                accessToken: googleAuth?.accessToken,
+                idToken: googleAuth?.idToken,
+              );
+              print(credential);
+
+              // Once signed in, return the UserCredential
+              final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+              print(userCredential);
+            },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("Add Private Sheet"),
@@ -91,6 +112,19 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _bottomView() {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, AsyncSnapshot<User?> user) {
+        if (user.hasData) {
+          return const Text("User login");
+        } else {
+          return const Text("No User");
+        }
+      },
     );
   }
 
