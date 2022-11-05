@@ -1,7 +1,3 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'firebase_options.dart';
+import 'googlesheet/drive_helper.dart';
 import 'models/app_config.dart';
 import 'models/chapter.dart';
 import 'models/subject.dart';
@@ -52,6 +49,10 @@ Future<void> loadConfig() async {
 void registerHttpService() {
   GetIt.instance.registerSingleton<HttpService>(
     HttpService(),
+  );
+
+  GetIt.instance.registerSingleton<DriveHelper>(
+      DriveHelper(),
   );
 }
 

@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../googlesheet/drive_helper.dart';
 import '../googlesheet/sheet_helper.dart';
 import '../models/subject.dart';
 import '../repositories/subject_repository.dart';
 import 'chapter_page.dart';
+import 'pick_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,6 +22,14 @@ class _HomePageState extends State<HomePage> {
   late double _deviceHeight, _deviceWidth;
   Box? _box;
   String? _newSheetId;
+  DriveHelper? _driveHelper;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _driveHelper = GetIt.instance.get<DriveHelper>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,28 +96,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           OutlinedButton(
-            onPressed: () async {
-              // Trigger the authentication flow
-              final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-              print(googleUser);
-
-              // Obtain the auth details from the request
-              final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-              // Create a new credential
-              final credential = GoogleAuthProvider.credential(
-                accessToken: googleAuth?.accessToken,
-                idToken: googleAuth?.idToken,
-              );
-              print(credential);
-
-              // Once signed in, return the UserCredential
-              final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-              print(userCredential);
+            onPressed: () {
+              _driveHelper?.signIn();
             },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text("Add Private Sheet"),
+              child: Text("Sign in with Google"),
             ),
           )
         ],
@@ -120,7 +114,22 @@ class _HomePageState extends State<HomePage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, AsyncSnapshot<User?> user) {
         if (user.hasData) {
-          return const Text("User login");
+          return OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const PickPage();
+                  },
+                ),
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Add Private Sheet"),
+            ),
+          );
         } else {
           return const Text("No User");
         }
