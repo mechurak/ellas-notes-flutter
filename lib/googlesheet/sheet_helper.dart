@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ellas_notes_flutter/repositories/lecture_repository.dart';
+import 'package:get_it/get_it.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 
@@ -8,8 +8,10 @@ import '../models/chapter.dart';
 import '../models/subject.dart';
 import '../models/word.dart';
 import '../repositories/chapter_repository.dart';
+import '../repositories/lecture_repository.dart';
 import '../repositories/subject_repository.dart';
 import '../secrets.dart';
+import 'drive_helper.dart';
 import 'index_holder.dart';
 
 class SheetHelper {
@@ -55,9 +57,9 @@ class SheetHelper {
     );
   }
 
-  static Future<bool> fetchSpreadsheet(String spreadsheetId) async {
+  static Future<bool> fetchSpreadsheet(String spreadsheetId, bool isPrivate) async {
     print('fetchSpreadsheet(). sheetId: $spreadsheetId');
-    final Spreadsheet spreadsheet = await getSpreadsheet(spreadsheetId);
+    final Spreadsheet spreadsheet = await getSpreadsheet(spreadsheetId, isPrivate);
     print('spreadsheet: $spreadsheet');
     String title = spreadsheet.properties!.title!;
     print('title: $title');
@@ -70,7 +72,7 @@ class SheetHelper {
       print("no 'doc_info' sheet!!!");
       return false;
     }
-    Subject subject = await _createOrGetSubject(title, spreadsheetId);
+    Subject subject = await _createOrGetSubject(title, spreadsheetId, isPrivate);
     subject = updateSubjectInfo(subject, docInfoSheet);
     await SubjectRepository().updateSubject(subject);
 
@@ -84,21 +86,26 @@ class SheetHelper {
     return true;
   }
 
-  static Future<Spreadsheet> getSpreadsheet(String spreadsheetId) async {
-    // Accessing Public Data with API Key : https://pub.dev/packages/googleapis_auth
-    var client = clientViaApiKey(googleApiKey);
+  static Future<Spreadsheet> getSpreadsheet(String spreadsheetId, bool isPrivate) async {
+    if (isPrivate) {
+      DriveHelper driveHelper = GetIt.instance.get<DriveHelper>();
+      return await driveHelper.getPrivateSpreadsheet(spreadsheetId);
+    } else {
+      // Accessing Public Data with API Key : https://pub.dev/packages/googleapis_auth
+      var client = clientViaApiKey(googleApiKey);
 
-    const fields = [
-      'properties',
-      'sheets.properties',
-      'sheets.data.rowData.values.formattedValue',
-      'sheets.data.rowData.values.textFormatRuns',
-      'sheets.data.rowData.values.effectiveFormat.textFormat.bold'
-    ];
+      const fields = [
+        'properties',
+        'sheets.properties',
+        'sheets.data.rowData.values.formattedValue',
+        'sheets.data.rowData.values.textFormatRuns',
+        'sheets.data.rowData.values.effectiveFormat.textFormat.bold'
+      ];
 
-    final sheetsApi = SheetsApi(client);
-    final Spreadsheet spreadsheet = await sheetsApi.spreadsheets.get(spreadsheetId, $fields: fields.join(','));
-    return spreadsheet;
+      final sheetsApi = SheetsApi(client);
+      final Spreadsheet spreadsheet = await sheetsApi.spreadsheets.get(spreadsheetId, $fields: fields.join(','));
+      return spreadsheet;
+    }
   }
 
   static Sheet? getDocInfoSheet(Spreadsheet spreadsheet) {
@@ -113,7 +120,7 @@ class SheetHelper {
     return docInfoSheet;
   }
 
-  static Future<Subject> _createOrGetSubject(String title, String spreadsheetId) async {
+  static Future<Subject> _createOrGetSubject(String title, String spreadsheetId, bool isPrivate) async {
     Subject? prevSubject = await SubjectRepository().getSubjectBySheetId(spreadsheetId);
     if (prevSubject != null) {
       return prevSubject;
@@ -123,7 +130,7 @@ class SheetHelper {
         key: -1,
         sheetId: spreadsheetId,
         title: title,
-        isPrivate: false,  // TODO: Distinguish public and private spreadsheet
+        isPrivate: isPrivate,
         lastUpdate: DateTime.now(),
         description: null,
         link: null,

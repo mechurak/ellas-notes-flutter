@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late double _deviceHeight, _deviceWidth;
+  late Future<Box?> subjectBox;
   Box? _box;
   String? _newSheetId;
   DriveHelper? _driveHelper;
@@ -28,7 +31,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    subjectBox = SubjectRepository().openBoxWithPreload();
     _driveHelper = GetIt.instance.get<DriveHelper>();
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    print("return from PickPage");
+    subjectBox = SubjectRepository().openBoxWithPreload();
+    setState(() {});
   }
 
   @override
@@ -67,7 +77,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _subjectView() {
     return FutureBuilder(
-      future: SubjectRepository().openBoxWithPreload(),
+      future: subjectBox,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           _box = snapshot.data;
@@ -123,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                     return const PickPage();
                   },
                 ),
-              );
+              ).then(onGoBack);
             },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
@@ -196,7 +206,7 @@ class _HomePageState extends State<HomePage> {
               if (_newSheetId != null) {
                 EasyLoading.instance.maskType = EasyLoadingMaskType.black;
                 EasyLoading.show(status: 'loading...');
-                await SheetHelper.fetchSpreadsheet(_newSheetId!);
+                await SheetHelper.fetchSpreadsheet(_newSheetId!, false);
                 setState(() {
                   _newSheetId = null;
                   Navigator.pop(context);

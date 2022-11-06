@@ -41,7 +41,7 @@ class _ChapterPageState extends State<ChapterPage> {
             onPressed: () async {
               EasyLoading.instance.maskType = EasyLoadingMaskType.black;
               EasyLoading.show(status: 'loading...');
-              await SheetHelper.fetchSpreadsheet(widget.subject.sheetId);
+              await SheetHelper.fetchSpreadsheet(widget.subject.sheetId, widget.subject.isPrivate);
               setState(() {});
               EasyLoading.dismiss();
             },

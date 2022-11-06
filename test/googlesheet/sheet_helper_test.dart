@@ -21,7 +21,7 @@ void main() {
 
     const spreadsheetId = '1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE';
 
-    Spreadsheet spreadsheet = await SheetHelper.getSpreadsheet(spreadsheetId);
+    Spreadsheet spreadsheet = await SheetHelper.getSpreadsheet(spreadsheetId, false);
     Sheet docInfoSheet = SheetHelper.getDocInfoSheet(spreadsheet)!;
 
     Subject newSubject = SheetHelper.updateSubjectInfo(tempSubject, docInfoSheet);
@@ -45,7 +45,7 @@ void main() {
     );
 
     const spreadsheetId = '1YA_EvZm_bLULp80tz0wJoM94K-YUa9jJ0BtBpQ6J7sE';
-    Spreadsheet spreadsheet = await SheetHelper.getSpreadsheet(spreadsheetId);
+    Spreadsheet spreadsheet = await SheetHelper.getSpreadsheet(spreadsheetId, false);
 
     Map<String, Chapter> chapterMap = ChapterRepository().getFakeChaptersBySubjectKey(tempSubject.key);
     Set<String> remainedChapterSet = Set.from(chapterMap.keys);

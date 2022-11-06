@@ -13,6 +13,7 @@ class DriveHelper {
   ]);
 
   DriveApi? _driveApi;
+  SheetsApi? _sheetsApi;
 
   Future<bool> signIn() async {
     final googleUser = await _googleSignIn.signIn();
@@ -37,6 +38,7 @@ class DriveHelper {
 
     final client = GoogleAuthClient(headers);
     _driveApi = DriveApi(client);
+    _sheetsApi = SheetsApi(client);
     return true;
   }
 
@@ -51,6 +53,19 @@ class DriveHelper {
     );
     print(jsonEncode(fileList));
     return fileList;
+  }
+
+  Future<Spreadsheet> getPrivateSpreadsheet(String spreadsheetId) async {
+    const fields = [
+      'properties',
+      'sheets.properties',
+      'sheets.data.rowData.values.formattedValue',
+      'sheets.data.rowData.values.textFormatRuns',
+      'sheets.data.rowData.values.effectiveFormat.textFormat.bold'
+    ];
+
+    final Spreadsheet spreadsheet = await _sheetsApi!.spreadsheets.get(spreadsheetId, $fields: fields.join(','));
+    return spreadsheet;
   }
 }
 

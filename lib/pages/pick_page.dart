@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:googleapis/drive/v3.dart';
 
 import '../googlesheet/drive_helper.dart';
+import '../googlesheet/sheet_helper.dart';
 
 class PickPage extends StatefulWidget {
   const PickPage({Key? key}) : super(key: key);
@@ -71,8 +73,13 @@ class _PickPageState extends State<PickPage> {
       itemCount: files.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          onTap: () {
+          onTap: () async {
+            EasyLoading.instance.maskType = EasyLoadingMaskType.black;
+            EasyLoading.show(status: 'loading...');
             print("Load ${files[index].name}");
+            await SheetHelper.fetchSpreadsheet(files[index].id!, true);
+            setState(() {});
+            EasyLoading.dismiss();
           },
           title: Text(files[index].name!),
           subtitle: Text(files[index].id!),
