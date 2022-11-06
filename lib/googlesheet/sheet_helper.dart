@@ -123,6 +123,7 @@ class SheetHelper {
         key: -1,
         sheetId: spreadsheetId,
         title: title,
+        isPrivate: false,  // TODO: Distinguish public and private spreadsheet
         lastUpdate: DateTime.now(),
         description: null,
         link: null,

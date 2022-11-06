@@ -20,17 +20,18 @@ class SubjectAdapter extends TypeAdapter<Subject> {
       key: fields[0] as int,
       sheetId: fields[1] as String,
       title: fields[2] as String,
-      lastUpdate: fields[3] as DateTime,
-      description: fields[4] as String?,
-      link: fields[5] as String?,
-      imageUrl: fields[6] as String?,
+      isPrivate: fields[3] as bool,
+      lastUpdate: fields[4] as DateTime,
+      description: fields[5] as String?,
+      link: fields[6] as String?,
+      imageUrl: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Subject obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.key)
       ..writeByte(1)
@@ -38,12 +39,14 @@ class SubjectAdapter extends TypeAdapter<Subject> {
       ..writeByte(2)
       ..write(obj.title)
       ..writeByte(3)
-      ..write(obj.lastUpdate)
+      ..write(obj.isPrivate)
       ..writeByte(4)
-      ..write(obj.description)
+      ..write(obj.lastUpdate)
       ..writeByte(5)
-      ..write(obj.link)
+      ..write(obj.description)
       ..writeByte(6)
+      ..write(obj.link)
+      ..writeByte(7)
       ..write(obj.imageUrl);
   }
 

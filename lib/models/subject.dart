@@ -14,21 +14,25 @@ class Subject {
   String title;
 
   @HiveField(3)
-  DateTime lastUpdate;
+  bool isPrivate;
 
   @HiveField(4)
-  String? description;
+  DateTime lastUpdate;
 
   @HiveField(5)
-  String? link;
+  String? description;
 
   @HiveField(6)
+  String? link;
+
+  @HiveField(7)
   String? imageUrl;
 
   Subject({
     required this.key,
     required this.sheetId,
     required this.title,
+    required this.isPrivate,
     required this.lastUpdate,
     required this.description,
     required this.link,
@@ -40,6 +44,7 @@ class Subject {
       key: subject["key"],
       sheetId: subject["sheetId"],
       title: subject["title"],
+      isPrivate: subject["isPrivate"],
       lastUpdate: subject["lastUpdate"],
       description: subject["description"],
       link: subject["link"],
@@ -52,6 +57,7 @@ class Subject {
       "key": key,
       "sheetId": sheetId,
       "title": title,
+      "isPrivate": isPrivate,
       "lastUpdate": lastUpdate,
       "description": description,
       "link": link,
