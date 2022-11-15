@@ -53,15 +53,11 @@ class _ChapterPageState extends State<ChapterPage> {
         ],
       ),
       body: SafeArea(
-        child: Container(
-          child: Center(
-            child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _chapterView(),
-                ]),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _chapterView(),
+            ],
           ),
         ),
       ),
@@ -76,8 +72,9 @@ class _ChapterPageState extends State<ChapterPage> {
           chapters = snapshot.data;
           return _chapterList();
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return SizedBox(
+            height: _deviceHeight,
+            child: const Center(child: CircularProgressIndicator()),
           );
         }
       },
@@ -85,6 +82,15 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Widget _chapterList() {
+    if (chapters!.isEmpty) {
+      return SizedBox(
+        height: _deviceHeight * 0.8,
+        child: const Center(
+          child: Text("No data! Please try to refresh."),
+        ),
+      );
+    }
+
     Chapter recentChapter = chapters!.first;
     for (Chapter chapter in chapters!) {
       if (chapter.lastStudyDate.compareTo(recentChapter.lastStudyDate) == 1) {
@@ -92,17 +98,19 @@ class _ChapterPageState extends State<ChapterPage> {
       }
     }
 
-    return Expanded(
-      child: ListView.separated(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: chapters!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _chapterTile(chapters![index], chapters![index] == recentChapter);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
-        },
-      ),
+    return ListView.separated(
+      padding: const EdgeInsets.all(16.0),
+      shrinkWrap: true,
+      // limit height
+      primary: false,
+      // disable scrolling
+      itemCount: chapters!.length,
+      itemBuilder: (BuildContext context, int index) {
+        return _chapterTile(chapters![index], chapters![index] == recentChapter);
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider();
+      },
     );
   }
 
