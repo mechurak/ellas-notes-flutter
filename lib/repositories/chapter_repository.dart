@@ -323,7 +323,7 @@ class ChapterRepository {
     Box box = Hive.box(chapterBox);
     for (var key in box.keys) {
       var curChapter = box.get(key);
-      if (chapter.nameForKey == curChapter.nameForKey) {
+      if (chapter.nameForKey == curChapter.nameForKey && chapter.subjectKey == curChapter.subjectKey) {
         print("Update $chapter");
         box.put(key, chapter);
         return;
