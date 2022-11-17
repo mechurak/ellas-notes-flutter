@@ -53,11 +53,13 @@ class _ChapterPageState extends State<ChapterPage> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _chapterView(),
-            ],
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _chapterView(),
+              ],
+            ),
           ),
         ),
       ),

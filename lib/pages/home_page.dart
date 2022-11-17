@@ -62,13 +62,15 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _subjectView(),
-              _addView(),
-              _bottomView(),
-            ],
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _subjectView(),
+                _addView(),
+                _bottomView(),
+              ],
+            ),
           ),
         ),
       ),
