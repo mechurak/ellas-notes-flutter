@@ -46,12 +46,12 @@ class _WordTileState extends State<WordTile> {
                 if (widget.word.note != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(widget.word.note!, style: Theme.of(context).textTheme.bodyMedium),
+                    child: Text(widget.word.note!, style: CustomTextStyle.note(context)),
                   ),
                 if (widget.word.memo != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(widget.word.memo!, style: Theme.of(context).textTheme.bodySmall),
+                    child: Text(widget.word.memo!, style: CustomTextStyle.memo(context)),
                   )
               ],
             ),

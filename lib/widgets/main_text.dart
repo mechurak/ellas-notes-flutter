@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:googleapis/sheets/v4.dart';
 
 import '../googlesheet/text_style_codec.dart';
+import '../themes/custom_text_style.dart';
 
 class MainText extends StatefulWidget {
   final String text;
@@ -59,7 +60,7 @@ class _MainTextState extends State<MainText> {
         text: TextSpan(
           text: '',
           children: children,
-          style: Theme.of(context).textTheme.titleLarge,
+          style: CustomTextStyle.mainText(context),
         ),
       );
     }
@@ -126,7 +127,7 @@ class _MainTextState extends State<MainText> {
       text: TextSpan(
         text: '',
         children: children,
-        style: Theme.of(context).textTheme.titleLarge,
+        style: CustomTextStyle.mainText(context),
       ),
     );
   }
