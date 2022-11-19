@@ -102,19 +102,13 @@ class _HomePageState extends State<HomePage> {
         children: [
           OutlinedButton(
             onPressed: _displayAddPopup,
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Add Public Sheet"),
-            ),
+            child: const Text("Add Public Sheet"),
           ),
           OutlinedButton(
             onPressed: () {
               _driveHelper?.signIn();
             },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Sign in with Google"),
-            ),
+            child: const Text("Sign in with Google"),
           )
         ],
       ),
@@ -137,10 +131,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ).then(onGoBack);
             },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Add Private Sheet"),
-            ),
+            child: const Text("Add Private Sheet")
           );
         } else {
           return const Text("No User");

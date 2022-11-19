@@ -40,17 +40,17 @@ class _WordTileState extends State<WordTile> {
                 ),
                 if (widget.word.hint != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
                     child: Text(widget.word.hint!, style: CustomTextStyle.hint(context)),
                   ),
                 if (widget.word.note != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
                     child: Text(widget.word.note!, style: CustomTextStyle.note(context)),
                   ),
                 if (widget.word.memo != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
                     child: Text(widget.word.memo!, style: CustomTextStyle.memo(context)),
                   )
               ],
@@ -58,7 +58,7 @@ class _WordTileState extends State<WordTile> {
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Text(widget.word.order.toString(), style: const TextStyle(fontSize: 9)),
+            child: Text(widget.word.order.toString(), style: CustomTextStyle.order(context)),
           ),
         ],
       ),

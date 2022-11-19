@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:ellas_notes_flutter/googlesheet/sheet_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../googlesheet/sheet_helper.dart';
 import '../models/chapter.dart';
 import '../models/subject.dart';
 import '../repositories/chapter_repository.dart';
+import '../themes/custom_text_style.dart';
 import '../utils/date_util.dart';
 import 'lecture_page.dart';
 
@@ -140,18 +141,24 @@ class _ChapterPageState extends State<ChapterPage> {
             Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(chapter.nameForKey),
+                Text(
+                  chapter.nameForKey,
+                  style: CustomTextStyle.nameForKey(context),
+                ),
                 const SizedBox(width: 16),
                 Flexible(
                   child: Text(
                     lastStudy,
-                    style: isFocused ? const TextStyle(color: Colors.red, fontStyle: FontStyle.italic) : null,
+                    style: isFocused ? CustomTextStyle.lastStudyFocus(context) : CustomTextStyle.lastStudyNormal(context),
                   ),
                 ),
               ],
             ),
-            Text(chapter.title, style: const TextStyle(fontSize: 16)),
-            chapter.category != null ? Text(chapter.category!) : const Text(''),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Text(chapter.title, style: Theme.of(context).textTheme.titleMedium),
+            ),
+            chapter.category != null ? Text(chapter.category!, style: CustomTextStyle.category(context)) : const Text(''),
           ],
         ),
       ),

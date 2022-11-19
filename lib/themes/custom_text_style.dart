@@ -15,7 +15,7 @@ class CustomTextStyle {
   static TextStyle note(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall!.copyWith(
       color: ColorStyles.lightGrey,
-      fontFamilyFallback: ["sans-serif"],  //
+      fontFamilyFallback: ["sans-serif"],
     );
   }
 
@@ -24,5 +24,39 @@ class CustomTextStyle {
       color: ColorStyles.blueGrey,
       fontFamilyFallback: ["sans-serif"],
     );
+  }
+
+  static TextStyle order(BuildContext context) {
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontSize: 9,
+          color: ColorStyles.lightGrey,
+        );
+  }
+
+  // for Chapter Screen =============
+  static TextStyle nameForKey(BuildContext context) {
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontSize: 9,
+          color: ColorStyles.lightGrey,
+        );
+  }
+
+  static TextStyle lastStudyNormal(BuildContext context) {
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+          color: ColorStyles.lightGrey,
+        );
+  }
+
+  static TextStyle lastStudyFocus(BuildContext context) {
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+          color: Colors.redAccent,
+          fontStyle: FontStyle.italic,
+        );
+  }
+
+  static TextStyle category(BuildContext context) {
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+          color: ColorStyles.blueGrey,
+        );
   }
 }
