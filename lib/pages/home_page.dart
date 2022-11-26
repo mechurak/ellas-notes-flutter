@@ -121,18 +121,17 @@ class _HomePageState extends State<HomePage> {
       builder: (context, AsyncSnapshot<User?> user) {
         if (user.hasData) {
           return OutlinedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return const PickPage();
-                  },
-                ),
-              ).then(onGoBack);
-            },
-            child: const Text("Add Private Sheet")
-          );
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const PickPage();
+                    },
+                  ),
+                ).then(onGoBack);
+              },
+              child: const Text("Add Private Sheet"));
         } else {
           return const Text("No User");
         }
@@ -143,48 +142,63 @@ class _HomePageState extends State<HomePage> {
   Widget _subjectList() {
     List subjects = _box!.values.toList();
 
-    return ListView.separated(
-      padding: const EdgeInsets.all(16.0),
-      shrinkWrap: true, // limit height
-      primary: false, // disable scrolling
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      // limit height
+      shrinkWrap: true,
+      // disable scrolling
+      primary: false,
       itemCount: subjects.length,
       itemBuilder: (BuildContext context, int index) {
         return _subjectTile(subjects[index]);
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return const Divider();
       },
     );
   }
 
   Widget _subjectTile(Subject subject) {
-    return ListTile(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return ChapterPage(subject: subject);
-            },
-          ),
-        );
-      },
-      visualDensity: const VisualDensity(vertical: 4),
-      title: Text(subject.title),
-      leading: Container(
-        // height: 100,
-        width: 75,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(subject.imageUrl!), // TODO: Consider null case
-            fit: BoxFit.cover,
-          ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(50),
+    return Card(
+      child: ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return ChapterPage(subject: subject);
+              },
+            ),
+          );
+        },
+        visualDensity: const VisualDensity(vertical: 4),
+        title: Text(subject.title),
+        leading: Container(
+          width: 75,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(subject.imageUrl!), // TODO: Consider null case
+              fit: BoxFit.cover,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(50),
+            ),
           ),
         ),
+        // TODO: Consider null case
+        subtitle: Text(subject.description!),
+        isThreeLine: true,
+        trailing: PopupMenuButton(
+          onSelected: (value) {
+            print("$value command for ${subject.title}");
+          },
+          itemBuilder: (context) {
+            return const [
+              PopupMenuItem(
+                value: "Delete",
+                child: Text('Delete'),
+              ),
+            ];
+          },
+        ),
       ),
-      subtitle: Text(subject.description!), // TODO: Consider null case
     );
   }
 
