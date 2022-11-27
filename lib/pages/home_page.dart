@@ -10,7 +10,7 @@ import '../googlesheet/drive_helper.dart';
 import '../googlesheet/sheet_helper.dart';
 import '../models/subject.dart';
 import '../repositories/subject_repository.dart';
-import 'chapter_page.dart';
+import '../ui/chapter/chapter_page.dart';
 import 'pick_page.dart';
 
 class HomePage extends StatefulWidget {
