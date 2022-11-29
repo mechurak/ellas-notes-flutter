@@ -190,6 +190,13 @@ class LectureRepository {
     box.addAll(words);
   }
 
+  Future<List<Word>> getWordsBySubjectAndChapter(int subjectKey, String chapterKey) async {
+    Box box = (await openBoxWithPreload())!;
+    List words = box.values.where((word) => (word.subjectKey == subjectKey) && (word.chapterKey == chapterKey)).toList();
+    List<Word> retList = List.from(words);
+    return retList;
+  }
+
   List<Word> getWords() {
     return _fakeWords;
   }

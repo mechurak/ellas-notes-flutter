@@ -5,20 +5,16 @@ import '../../models/chapter.dart';
 import '../../models/subject.dart';
 import '../../themes/custom_text_style.dart';
 import '../../utils/date_util.dart';
-import '../../pages/lecture_page.dart';
+import '../lecture/lecture_page.dart';
 import 'chapter_viewmodel.dart';
 
 class ChapterPage extends View<ChapterViewModel> {
   final Subject subject;
-  late final double _deviceHeight, _deviceWidth;
 
   ChapterPage({Key? key, required this.subject}) : super(key: key, builder: () => ChapterViewModel(subject: subject));
 
   @override
   Widget build(BuildContext context) {
-    _deviceHeight = MediaQuery.of(context).size.height;
-    _deviceWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(subject.title),
@@ -55,9 +51,11 @@ class ChapterPage extends View<ChapterViewModel> {
   }
 
   Widget _chapterList() {
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     if (viewModel.chapters.value.isEmpty) {
       return SizedBox(
-        height: _deviceHeight * 0.8,
+        height: deviceHeight * 0.8,
         child: const Center(
           child: Text("No data! Please try to refresh."),
         ),
