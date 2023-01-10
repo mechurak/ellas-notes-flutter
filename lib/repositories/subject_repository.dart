@@ -76,6 +76,13 @@ class SubjectRepository {
     }
   }
 
+  Future<List<Subject>> getSubjectList() async {
+    Box box = (await openBoxWithPreload())!;
+    List subjects = box.values.toList();
+    List<Subject> retList = List.from(subjects);
+    return retList;
+  }
+
   Future<void> updateSubject(Subject subject) async {
     Box box = Hive.box(subjectBox);
     if (subject.key == -1) {

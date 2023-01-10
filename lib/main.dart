@@ -14,7 +14,7 @@ import 'models/chapter.dart';
 import 'models/subject.dart';
 import 'models/word.dart';
 import 'pages/game_page.dart';
-import 'pages/home_page.dart';
+import 'ui/home/home_page.dart';
 import 'services/firebase_service.dart';
 import 'services/http_service.dart';
 import 'themes/ellas_notes_theme_data.dart';
